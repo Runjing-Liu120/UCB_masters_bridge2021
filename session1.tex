@@ -1,0 +1,492 @@
+%
+% This is the LaTeX template file for lecture notes for CS294-8,
+% Computational Biology for Computer Scientists.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi.
+%
+% This template is based on the template for Prof. Sinclair's CS 270.
+
+\documentclass[11pt]{article}
+\usepackage{charter}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+
+\setlength{\oddsidemargin}{0 in}
+\setlength{\evensidemargin}{0 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+\newcommand{\PP}{\mathbb{P}}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[5]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#5}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Masters Bridge Program
+                        \hfill Summer 2021} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Session {#1}: #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it Instructor: #3 \hfill} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Section #1: #2}{Section #1: #2}
+   \vspace*{4mm}
+}
+
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[]{Exercise}
+\newenvironment{proofof}[1]{{\em Proof of #1.}}{\hfill%\rule{2mm}{2mm}
+\qed}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\H}{\mathcal{H}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\MAP}{\mathrm{MAP}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\Rp}{\mathbb{R}_{>0}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\lbr}{\langle}
+\newcommand{\rbr}{\rangle}
+\newcommand{\indi}{\mathds{1}}
+
+\begin{document}
+\lecture{1}{Basic concepts}{Bryan Liu}{}{1}
+
+\section{Probability spaces}
+
+The building blocks of probability theory are three ingredients:
+
+\fbox{\begin{minipage}{\textwidth}
+\begin{itemize}
+  \item {\bf An outcome space: } the set of possible outcomes, denoted $\Omega$.
+  \item {\bf Events: } subsets of the outcome space, often denoted with a capital letter,
+  e.g. $A\subseteq \Omega$.
+  \item {\bf Probability: } a function which maps events to a real number
+  between 0 and 1. We use $\P$ to denote such a function,
+  in which case $\P(A)$ represents the probability of event $A$.
+\end{itemize}
+\end{minipage}}
+
+\begin{example}[Rolling two dice]
+
+  Two dice are rolled, and number of the top faces are recorded.
+
+  The \textit{outcome space} are the tuples,
+
+\begin{align*}
+  \Omega = \begin{Bmatrix}
+    (1, 1), & (1, 2), & (1, 3), & (1, 4), & (1, 5), & (1, 6) \\
+    (2, 1), & (2, 2), & (2, 3), & (2, 4), & (2, 5), & (2, 6) \\
+    (3, 1), & (3, 2), & (3, 3), & (3, 4), & (3, 5), & (3, 6) \\
+    (4, 1), & (4, 2), & (4, 3), & (4, 4), & (4, 5), & (4, 6) \\
+    (5, 1), & (5, 2), & (5, 3), & (5, 4), & (5, 5), & (5, 6) \\
+    (6, 1), & (6, 2), & (6, 3), & (6, 4), & (6, 5), & (6, 6)
+  \end{Bmatrix}.
+\end{align*}
+
+  \textit{Events} are subsets of the outcome space. One such event
+  might be ``the sum of the two numbers is 5". This event is the subset
+  %
+  \begin{align*}
+    A = \begin{Bmatrix} (1, 4), & (2, 3), & (3, 2), & (4, 1) \end{Bmatrix}
+  \end{align*}
+  %
+  Assuming the die are fair, each tuple in the event space is assigned to have
+  probability $1/36$, and the probability of the event above is
+  \begin{align*}
+   \P(\text{the sum of the two numbers is 5}) = \frac{4}{36} = \frac{1}{9}
+  \end{align*}
+
+\qed
+\end{example}
+
+\begin{example}[Particle decay]
+  We measure the time it takes for a radioactive particle to decay.
+  The \textit{outcome space} is $\Omega = \R^{+}$, the positive real line.
+
+  Events are subsets of the positive real line. For example, one
+  event might be ``it takes at least 3 hours for the particle to decay".
+
+  We define the probability of this event as
+  \begin{align*}
+    \P(\text{at least 3 hours for the particle to decay}) =
+    \int_{3}^\infty \lambda \exp^{-\lambda t} \;dt,
+  \end{align*}
+  where $\lambda$ is a physical constant unique to the particle in study.
+
+  In general, an event $A$ is of the form
+  \begin{align*}
+    A = \{t : t \geq l \text{ and } t \leq u\},
+  \end{align*}
+  where $t$ is the decay time, while $l$ and $u$ are real numbers.
+  We define the probability of such events as
+  \begin{align}
+    \P(A) =
+    \int_{l}^u \lambda \exp^{-\lambda t} \;dt.
+    \label{eq:exponential_ex}
+  \end{align}
+
+  When the probability of decay times follow the formula in \eqref{eq:exponential_ex},
+  we say that the decay time is \textit{exponentially distributed}.
+
+\qed
+\end{example}
+
+\begin{example}(Stock prices)
+  Let $S_0$ be the initial stock price, and $S_1$ be its price after one unit time.
+  Consider the log ratio of stock prices,
+  \begin{align*}
+    \Delta \log S := \log\frac{S_1}{S_0}.
+  \end{align*}
+
+  We model the log ratio as a random quantity.
+  The outcome space is the real line. Events are subsets of the real line,
+  for example, ``the change in log stock price is greater than $l$ but less than $u$",
+  $l$ and $u$ real numbers. In math, an event $A$ is the set
+  \begin{align*}
+    A = \{\Delta \log S \in [l, u]\}.
+  \end{align*}
+
+  The probability of such events are modeled as
+  \begin{align}
+    \P(A) = \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
+    \label{eq:normal_ex}
+  \end{align}
+
+  Here, $\mu$ is the \textit{exponential growth rate of the stock} (exponential because
+  we are working with log-prices) and $\sigma^2$ is the \textit{volitility} of the stock.
+
+  Random quantities with event probabilities
+  given by \eqref{eq:normal_ex} are called \textit{normally distributed}.
+\qed
+\end{example}
+
+In the first two examples, the assigned probabilities are more or less well-motivated
+by our understanding of the laws of physics. In the last example, the assumption of
+a normal distribution is a modeling choice, which may or may not be accurate.
+An important job for the statistician is arguing that the modeling choice is appropriate,
+either with theoretical derivations or with empirical evidence.
+
+
+\section{Rules of probability}
+
+Probabilities must satisfiy
+
+\fbox{\begin{minipage}{\textwidth}
+\begin{itemize}
+  \item \textbf{non-negativity}: $\P(A) \geq 0$ for events $A$.
+  \item \textbf{additivity}: $\P(A \cup B) = \P(A) + \P(B)$ if $A$ and $B$ are
+  disjoint.
+  \item \textbf{total one}: $\P(\Omega) = 1$.
+\end{itemize}
+\end{minipage}}
+
+From these basic rules we can derive
+\begin{itemize}
+  \item \textbf{The complement rule}: $\P(\text{not} A) = 1 - \P(A)$.
+  \item \textbf{The difference rule}: if $A\subseteq B$, then $\P(B \text{but not} A) = \P(B) - \P(A)$.
+  \item \textbf{Inclusion-exclusion}: $\P(A\cup B) = \P(A) + \P(B) - \P(A\cap B)$.
+\end{itemize}
+IN CLASS: proof by picture.
+
+Next, we extend the inclusion-exclusion principle to derive Boole's inequality.
+\begin{exercise}[Boole's inequality]
+
+  $\quad$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Argue that for any events $A, B$,
+    \begin{align*}
+      \P(A \cup B)\leq \P(A) \cup \P(B)
+    \end{align*}
+    \item Use induction to argue that for any set of events $B_1, ..., B_n$,
+    \begin{align}
+    \P(\cup_{i=1}^n B_i) \leq \sum_{i=1}^{n} \P(\cup_{i = 1}^n B_i)
+    \label{eq:booles}
+    \end{align}
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{example}[Bonferroni's correction]
+This simple inequality \eqref{eq:booles} is useful in multiple testing.
+Suppose we are running $n$ trials (say to test the effect of $n$ different drugs),
+and for each trial we set up an $\alpha$-level
+hypothesis test.
+Let $B_i$ be the event that we reject the $i$-th hypothesis.
+If our test is correctly set-up, then we must have $\P(B_i) = \alpha$ for all $i$,
+where $\P$ is the probability distribution under the null hypothesis.
+
+Notice however, that in general, we must have $\P(\cup_i B_i) \geq \alpha$,
+so the probability that we make at least one false rejection is greater than $\alpha$.
+
+To control the probability of making even one false rejection then, we must then design
+a test such that the probability of rejection for each test is less than $\alpha / n$ --
+that is, $\P(B_i) \leq \alpha / n$ for all $i$. In this case,
+Boole's inequality shows that
+\begin{align*}
+  \P(\cup_{i=1}^n B_i) \leq \sum_{i=1}^{n} \P(\cup_{i = 1}^n B_i)
+  \leq \alpha.
+\end{align*}
+
+This correction of $\alpha$ values by dividing by $n$ is known as \textit{Bonferroni's correction}.
+Notice that we did not need any assumptions on the nature of the events $B_i$;
+we only assumed we have correctly specified hypothesis tests, which makes this
+correction of general interest.
+
+However, correcting an $\alpha$-rejection level to an $(\alpha / n)$-rejection level
+considerably decreases the power of the tests (i.e. it is harder to make any true rejections).
+When we know more about the nature of the events, e.g. their correlation structure,
+we can employ less stringent corrections.
+
+\qed
+\end{example}
+
+\section{Conditional probabilities}
+
+Given two events $A$ and $B$, we can compute the probability that $A$ occurs
+if we know that $B$ occurs. This is known as a conditional probability,
+written $\P(A | B)$.
+
+The general formula is given by
+
+\fbox{\begin{minipage}{\textwidth}
+\vspace{-1em}
+\begin{align}
+  \P(A | B) = \frac{\P(A \cap B)}{\P(B)}.
+  \label{eq:conditional_prob}
+\end{align}
+\end{minipage}}
+
+IN CLASS: show by picture.
+
+We can re-write \eqref{eq:conditional_prob} as
+\begin{align}
+  \P(A\cap B) = \P(A | B) \P(B)
+  \label{eq:multiplication}.
+\end{align}
+
+Events $A$ and $B$ are \textbf{independent} if $P(A | B) = P(A)$.
+For independent events, \eqref{eq:multiplication} becomes
+\begin{align}
+  \P(A\cap B) = \P(A) \P(B)
+  \label{eq:indep}.
+\end{align}
+
+\begin{exercise}[Sequential vs parallel components]
+A system consists of two components $C_1$ and $C_2$. Suppose the failure probability
+of $C_1$ is 0.9, while the failure probability of $C_2$ is 0.8.
+The failure events are independent.
+\begin{enumerate}[label = (\alph*)]
+  \item Suppose the system is connected in series, so if one of the two component
+  fails, the entire system fails. What is the probability that the system fails?
+  \item Suppose the system is connected in parallel, so as long as one of the
+  component does not fail, the system does not fail. What is the probability that
+  the system fails?
+\end{enumerate}
+
+
+\end{exercise}
+
+\begin{exercise}[Conditional probabilities]
+Suppose there is a 40\% chance of raining Monday. If it rains Monday,
+then the probability that it rains Tuesday is 60\%. But if
+it does not Monday, then the probability that it rains on Tuesday
+falls to 5\%. Calculate the following probabilities that on Monday and Tuesday,
+
+\begin{enumerate}[label = (\alph*)]
+  \item It rains at least once.
+  \item It rains exactly once.
+  \item It rains on the second day.
+\end{enumerate}
+\label{ex:raining}
+\end{exercise}
+
+IN CLASS draw tree diagram. Using the above tree diagram, we can derive
+
+\fbox{\begin{minipage}{\textwidth}
+\textbf{The rule of average conditional probabilities:}
+\begin{align}
+\P(A) = \P(A | B_1) \P(B_1) + ... + \P(A | B_n)\P(B_n)
+\label{eq:avg_cond_probs}
+\end{align}
+where $B_1, ..., B_n$ is a \textit{partition} of $\Omega$, meaning
+that the $B_i$ are dijoint and that $\cup_i B_i = \Omega$.
+
+\end{minipage}}
+
+\begin{exercise}[Stratified sampling]
+Three high schools have senior class of size 100, 400, and 500, respectively.
+Consider two schemes for selecting a student from among the three senior classes:
+\begin{enumerate}[label=\Roman*]
+  \item Make a list of all 1000 seniors, and choose a student at random from this list.
+  \item Pick one school at random, then pick a student at random from the senior class in that school.
+\end{enumerate}
+Are these sampling schemes equivalent? Why or why not?
+
+Consider a third scheme: where we pick school $i$ with probability $p_i$ (so $p_1 + p_2 + p_3 = 1$),
+and then pick a student at random from the senior class in that school. Find the probabilities which make this last scheme equivalent to scheme I.
+
+\end{exercise}
+
+\section{Bayes rule}
+
+We can combine the conditional probabiilty formula \eqref{eq:conditional_prob} and
+the rule of average conditional probabilities \eqref{eq:avg_cond_probs} to arrive
+at {\bf Bayes rule}:
+
+\fbox{\begin{minipage}{\textwidth}
+For a partition of all possible outcomes $B_1, ..., B_n$,
+\begin{align}
+\P(B_i | A) = \frac{\P(A|B_i)\P(B_i)}{\P(A | B_1) \P(B_1) + ... + \P(A | B_n)\P(B_n)}.
+\label{eq:bayes_rule}
+\end{align}
+
+\end{minipage}}
+
+\begin{exercise}[Conditial probabilities continued]
+  Return to the conditional probabilities in Exercise~\ref{ex:raining}.
+  Suppose I was out of town Monday, so I don't know if it rained then. I come back
+  on Tuesday, and saw that it rained. Apply Bayes rule to compute the probability
+  that it rained Monday.
+  \footnote{To a frequentist, this question would be nonsensical: Monday has already
+  occured, so either it rained or it did not rain; there is no sense in assigning a
+  probability to this event.
+  In the mind of a Bayesian however, the event ``it rained on Monday"
+  is unobserved -- and thereore random. The probability assigned to this event
+  quantifies the uncertainty in the occurance of the unobserved event.
+  The Bayesian will continue to view this event as random
+  until more information is collected, for example, by asking a friend
+  who was in town whether or not it rained on Monday.  }
+\end{exercise}
+
+\begin{exercise}[Identical or fraternal twins]\footnote{
+  Example taken from Chapter 3 of REF.
+  }
+  A mother finds out via sonogram that she is going to have twin boys.
+  She wants to know, what is the probability that her twins will be
+  identical rather than fraternal? The doctor tells her that one-third of twin births
+  are identical, while two-thirds are fraternal.
+  For identical twins, the siblings must be of the same sex; for fraternal births,
+  the siblings have a 50/50 chance of being either same sex or opposite sex.
+  Apply Bayes rule to compute probabiilty that the mother's twins will be fraternal.
+\end{exercise}
+
+\begin{exercise}[Medical diagnosis]
+  A diagnostic test for a type of cancer has a \textit{sensitivity} of 98\% and a
+  \textit{specificity} of 90\%. Here,
+  \begin{itemize}
+    \item \textbf{sensitivity} is the probability that a test returns a positive result if the
+individual does not have the disease.
+    \item \textbf{specificity} is the probability that a test returns a negative result if the
+individual does not have the disease.
+  \end{itemize}
+
+  Suppose I walk into the doctor's office and get a test for this type of cancer.
+  I test positive. Consider three scenarios:
+  \begin{enumerate}[label = (\alph*)]
+    \item Going home, I Google that this cancer occurs in 0.2\% of the
+    adult population in the United States.
+    Being a statistician, I use Bayes rule to compute the probability that I have
+    this cancer. What is the probability?
+    \item But wait. Upon talking with my doctor again, he tells me that in his experience,
+    smokers are more likely than the general public to have this cancer.
+    In fact, about 20\% of smokers develop this cancer. My doctor is well-trained in
+    probability, and she knows that I smoke.
+    She uses Bayes rule to compute the probabiilty that I have cancer. What is
+    this probability?
+    \item I go visit a geneticist who sequences my genome.
+    He tells me that among people with similar genetic characteristics as mine,
+    about 5\% of people develop this cancer.
+    The geneticist then uses Bayes rule to compute the probabiilty that
+    I have cancer. What is this probability?
+  \end{enumerate}
+\end{exercise}
+
+Bayes rule is a mathematical formula for turning observed data into
+inferences concerning unknown quantities.
+In the previous exercise, the observed data is that I have a positive diagnostic test.
+The unknown quantity that I would like to know is whether or not I have cancer.
+In story of the mother with twins, the observed data is that her
+twins are both boys. The unknown quantity is whether the twins are identical or fraternal.
+
+Crucially, the inferences made using Bayes rule depend on specifying a \textit{prior probabiilty},
+that is, the background probability of the unknown event before seeing any data.
+In the twin example, the doctor can go into a hospital database of all births in the United States,
+and see what fraction of twins were fraternal, and what fraction were identical.
+In this case, these proportions were one-third and two-thirds, respectively.
+
+However, as the medical diagnosis example tries to illustrate, this prior probability
+may not be straight-forward to specify. Which prior probability should I use, and which is correct? My Google search, my doctor,
+or my geneticist? The resulting conclusion about my cancer diagnosis
+depends what assumptions we make; and the assumptions we make depend
+on the available knowledge at hand.
+
+
+\end{document}
