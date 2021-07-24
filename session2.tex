@@ -1,0 +1,538 @@
+%
+% This is the LaTeX template file for lecture notes for CS294-8,
+% Computational Biology for Computer Scientists.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi.
+%
+% This template is based on the template for Prof. Sinclair's CS 270.
+
+\documentclass[11pt]{article}
+\usepackage{charter}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+
+\setlength{\oddsidemargin}{0 in}
+\setlength{\evensidemargin}{0 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+\newcommand{\PP}{\mathbb{P}}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[5]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#5}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Masters Bridge Program
+                        \hfill Summer 2021} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Session {#1}: #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it Instructor: #3 \hfill} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Section #1: #2}{Section #1: #2}
+   \vspace*{4mm}
+}
+
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[]{Exercise}
+\newenvironment{proofof}[1]{{\em Proof of #1.}}{\hfill%\rule{2mm}{2mm}
+\qed}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\H}{\mathcal{H}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\MAP}{\mathrm{MAP}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\Rp}{\mathbb{R}_{>0}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\text{Var}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\lbr}{\langle}
+\newcommand{\rbr}{\rangle}
+\newcommand{\indi}{\mathds{1}}
+
+\begin{document}
+\lecture{2}{Random variables}{Bryan Liu}{}{2}
+
+We introduce the notion of a random variable. We gave several examples
+already in the previous session: the sum of two dice roles, the time until
+radioactive decay, the change in the stock price.
+
+Informally, a random variable is a variable that can take on several possible
+values, and the possible values are assigned a probability. Typically,
+we will use capital letters towards the end of the alphabet to denote a random variable,
+and lower case letters to denote constants.
+For a random variable $X$ , we can ask, what is the probability that
+$X = x$? Or $X \leq x$? And so forth. We return to the same examples
+that opened the previous session for concreteness.
+
+\begin{example}[Rolling two dice]
+  \label{ex:dice}
+
+  Two dice are rolled, and number of the top faces are recorded.
+  Let $S$ be the sum of the two dice rolls.
+
+  Assuming the die are fair, the probability that I roll a 5 is
+  \begin{align*}
+   \P(S = 5) = \frac{4}{36} = \frac{1}{9}
+  \end{align*}
+
+\qed
+\end{example}
+
+\begin{example}[Particle decay]
+  \label{ex:particle_decay}
+  Let $T$ be the time it takes for a radioactive particle to decay.
+  The probability that it takes at least $t$ hours to decay is given by
+  \begin{align*}
+    \P(T\geq t) =
+    \int_{t}^\infty \lambda \exp^{-\lambda s} \;ds,
+  \end{align*}
+  where $\lambda$ is a physical constant unique to the particle in study.
+\qed
+\end{example}
+
+\begin{example}(Stock prices)
+  \label{ex:log_stocks}
+  Let $\Delta \log S$ be the change in log price of a stock after one unit time.
+  The probability that the log change between two numbers $l$ and $u$ is modeled
+  as
+  \begin{align}
+    \P(\Delta \log S \in [l, u]) = \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
+    \label{eq:normal_ex}
+  \end{align}
+  where, $\mu$ is the \textit{exponential growth rate of the stock}
+  and $\sigma^2$ is the \textit{volitility} of the stock.
+\qed
+\end{example}
+
+\section{Distributions}
+
+In the above examples, each random variable was assigned probabilities for
+the values it could take on: we call these assignment probabilities
+\textit{the distribution} of the random variable.
+
+Often these distributions have a name. The next exercise constructs our
+first named distribution, the \textit{Binomial distribution}:
+
+\begin{exercise}[The binomial distribution]
+Consider a coin which comes up heads with probabiilty $p$.
+Consider flipping this coin $n$ times. Let $X$ be the number of
+heads in the $n$ trials. Show that
+\begin{align}
+\P(X = k) = {n \choose k} p^k (1 - p)^{n - k}.
+\label{eq:binom_distr}
+\end{align}
+
+\end{exercise}
+
+When a random variable $X$ has assignemnt probabilities given by \eqref{eq:binom_distr},
+we say that $X$ has a Binomial distribution with parameters $(n, p)$. The two constants
+$n$ and $p$ specify this distribution. Often, we will write this as
+\begin{align*}
+  X\sim\text{Binomial}(n, p).
+\end{align*}
+
+Here are a few more examples of named distributions.
+
+\begin{example}(Poisson)
+A random variable $X$ which takes values on the non-negative integers is
+\textit{Poisson distributed} with parameter $\lambda$ if
+\begin{align*}
+  \P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}.
+\end{align*}
+
+The Poisson distribution is often used to model the number of occurences
+of a certain event in a window of time. We will see its appearance in the next session.
+\qed
+\end{example}
+
+\begin{example}(Exponential)
+A random variable $X$ which takes values on the positive real line is
+\textit{exponentially} distributed with parameter $\lambda$ if
+\begin{align}
+  \P(X \in [l, u]) =
+  \int_{t}^u \lambda \exp^{-\lambda s} \;ds
+  \label{eq:exponential}
+\end{align}
+for all real numbers $0 \leq l \leq u$.
+
+The time until radioactive decay in Example~\ref{ex:particle_decay}
+followed an exponential distribution.
+\qed
+\end{example}
+
+\begin{example}(Guassian)
+A random variable $X$ which takes values on the real line follows a
+\textit{Gaussian} or \textit{normal} distribution with mean $\mu$ and variance
+$\lambda$ if
+\begin{align}
+  \P(X \in [l, u]) =
+  \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+  \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
+  \label{eq:normal}
+\end{align}
+for all real numbers $\leq l \leq u$.
+
+Many natural phenomenon such as the distribution of human heights, IQ scores, and
+measurement error in physical experiments are well-approximated by the familiar
+bell-shaped curve that characterize the normal distribution.
+
+The normal distribution is ubiquitous in statistical inference as a result of
+the celebrated central limit theorem, which says, loosely, that averages
+of random variables will converge to a normal distribution. We will see
+a concrete example in the next session.
+\qed
+\end{example}
+
+For a \textit{discrete} random variable $X$, the distribution of $X$ is specified
+by the probabilities $\P(X = x)$, for all possible values $x$ that the random variable $X$
+can take. The sum of two dice rolls, Binomial random variables, and Poisson random variables
+are discrete.
+
+For a \textit{continuous} random variable $X$, such as exponential or normal random variables,
+the probability that $\P(X = x) = 0$. Instead, probabilities were defined on sets
+using integrals (\ref{eq:exponential},\ref{eq:normal}).
+The integrand is called a \textit{probability density function} (or simply a ``density"). Loosely,
+we can interpret a density $f(x)$ as specifying the probability that $X$ is in an infintessimal
+interval around $x$, that is
+\begin{align*}
+  \P(X \in dx) = f(x)\;dx.
+\end{align*}
+
+In later sessions, we will have more exercises on manipulating probability density functions.
+Our current definition will suffice for the concepts introduced below.
+
+\subsection{Conditional distributions}
+Definitions for conditional probabilities and independence are similarly defined
+as before in the context of random variables.
+\begin{itemize}
+  \item {\bf Conditional distributions: }\footnote{
+  We will come back to this formula specifically for continuous random variables ...
+  in particular we need to be careful if we want to condition on the event $Y = y$,
+  which has probabiilty 0 if $Y$ is continuous.
+  }
+  Let $X$ and $Y$ be two random variables. Suppose we know that $Y\in B$, $B$
+  being a subset of the range of $Y$. Then the
+  \textit{conditional distribution} of $X$ given $Y\in B$ is
+  \begin{align*}
+    \P(X\in A | Y \in B) = \frac{\P(X\in A \text{ and } Y \in B)}{\P(Y \in B)}.
+  \end{align*}
+  \item {\bf Independence: } Random variables $X$ and $Y$ are independent if
+  \begin{align*}
+    \P(X\in A | Y \in B) = \P(X\in A)
+  \end{align*}
+  for all sets $A$ and $B$.
+
+  Intuitively, $X$ and $Y$ are independent if the values of $X$ are unaffected
+  by the values of $Y$.
+\end{itemize}
+
+\section{Expectation and variance}
+
+We now turn computing scalar quantities which summarize random variables and their distributions.
+We start with
+
+\fbox{\begin{minipage}{\textwidth}
+The \textit{expectation} (or \textit{expected value}) of a random variable $X$, denoted
+$\E(X)$, is defined as
+\begin{align*}
+\E(X) = \sum_{x} x \P(X = x)
+\end{align*}
+if $X$ is a discrete random variable.
+
+If $X$ is a continuous random variable with probability density function $f$, then
+\begin{align*}
+  \E(X) = \int_{-\infty}^\infty x f(x)\; dx
+\end{align*}
+
+\end{minipage}}
+
+\begin{exercise}[]
+  $\;$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Let $S$ be the sum of two dice rolls (see Example~\ref{ex:dice}). Compute
+    the expectation of $S$.
+    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
+    $X$ has expectation $\lambda$.
+    \item Confirm that if $X$ is normally distributed with parameters $(\mu, \sigma^2)$,
+    then the expectation of $X$ is $\mu$.
+  \end{enumerate}
+\end{exercise}
+
+Next, we record some properties of expectations:
+\begin{itemize}
+  \item {\bf Linearity: } For scalars $a, b\in R$,
+  \begin{align*}
+    \E(aX + b) = a\E(X) + b.
+  \end{align*}
+  \item {\bf Addition rule: } For two random variables $X$ and $Y$,
+  \begin{align*}
+    \E(X + Y) = \E(X) + \E(Y).
+  \end{align*}
+  \item {\bf Multiplication rule: } For two \textit{independent}
+  random variables $X$ and $Y$,
+  \begin{align*}
+    \E(XY) = \E(X)\E(Y).
+  \end{align*}
+\end{itemize}
+Notice that we do not require independence for addition, but we do require
+independence for multiplication.
+
+\begin{exercise}[]
+  Let $S_n$ be the sum of numbers obtained from $n$ dice. Find $\E(S_n)$.
+\end{exercise}
+
+\begin{exercise}[]
+  Let $X$ be Binomially distributed with parameters $(n, p)$.
+  Show that $\E(X) = np$.
+\end{exercise}
+
+\begin{exercise}[Markov's inequality]
+  Let $X$ be a non-negative random variable with expectation $\mu$.
+  Show that for any number $a \geq 0$, that
+  \begin{align}
+    \P(X \geq a) \leq \frac{\E(X)}{a}
+    \label{eq:markov}
+  \end{align}
+\end{exercise}
+
+We use the definition of an expectation to broaden the scope of distributional summaries.
+Next, we consider the \textit{variance} of a random variable.
+
+\fbox{\begin{minipage}{\textwidth}
+Let $\mu = \E(X)$. \textit{variance} of a random variable $X$, abbreviated
+$\V(X)$, is defined as the expected squared deviation of $X$ from $\mu$,
+\begin{align*}
+\V(X) = \E\Big((X - \mu)^2\Big).
+\end{align*}
+
+\end{minipage}}
+
+\begin{exercise}[Alternative formula for variance]
+  Show that $\V(X) = \E(X^2) - \E(X)^2$.
+\end{exercise}
+
+\begin{exercise}[]
+  $\;$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Let $X$ be the number returned by a sigle dice roll. Compute
+    the expectation of $X$.
+    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
+    $\V(X)=\lambda$.
+    \item Confirm that if $X$ is normally distributed with parameters $(\mu, \sigma^2)$,
+    then $\V(X)=\sigma^2$.
+  \end{enumerate}
+\end{exercise}
+
+Next, we now record some properties of variances:
+\begin{itemize}
+  \item {\bf Scaling and shifting: } For scalars $a, b\in R$,
+  \begin{align*}
+    \V(aX + b) = a^2\V(X).
+  \end{align*}
+  \item {\bf Addition rule: } For two \textit{independent}
+  random variables $X$ and $Y$,
+  \begin{align*}
+    \V(X + Y) = \V(X) + \V(Y).
+  \end{align*}
+\end{itemize}
+
+\begin{exercise}[iid random variables]
+  Suppose $X_1,..., X_n$ are random variables drawn independently from a
+  common distribution. Let $\mu$ and $\sigma^2$ be the mean and variance,
+  respectively, of this distribution. Let
+  \begin{align*}
+    \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
+  \end{align*}
+  be the average of the $n$ random variables. Show that
+
+  \begin{enumerate}[label = (\alph*)]
+    \item $\E(\bar{X}) = \mu$.
+    \item $\V(\bar{X}) = \frac{\sigma^2}{n}$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{exercise}[Chebychev's inequality]
+  Use Markov's inequality \eqref{eq:markov} to show that
+  \begin{align*}
+    \P(|X - \E(X)| \geq a) \leq \frac{\V(X)}{a}.
+  \end{align*}
+\end{exercise}
+
+In statistics, we are often interested in the the \textit{tail probability},
+the probability that a random variable $X$ is far from its mean.
+Chebychev's inequality puts an upper bound on how large this probability can be.
+
+In hypotheis testing, this random variable $X$ would represent a test statistic;
+if the the deviation of the observed statistic from its mean occurs with small probability under
+the null hypothesis,
+then we would consider this evidence in favor or \textit{rejecting} the null.
+Chebychev inequality is one way to show that the probability of deviations are small,
+which may allow us to reject a null hypothsis.
+Notice that this inequality does not depend on distributional assumptions of $X$
+(such as normality); we only need to know (or be able to estimate) its mean and variance.
+
+\begin{exercise}[Empirical distribution]
+Suppose I have collected $n$ data points $x_1, ..., x_n$. The \textit{empirical distrbution}
+is defined as the distribution that places mass $1 / n$ on each data point.
+Let $\hat F$ be the empirical distribution, so we say that a random variable $X$
+has distribution $\hat F$ if
+\begin{align*}
+  \P(X = x) = \frac{\#\{x_i = x\}}{n}.
+\end{align*}
+
+Show that if $X$ has distribution $\hat F$, then
+\begin{enumerate}[label = (\alph*)]
+  \item $\E(X) = \frac{1}{n}\sum_{i=1}^n x_i$, the mean of the $n$-data points.
+  \item What is $\V(X)$?
+\end{enumerate}
+\label{exer:empirical}
+\end{exercise}
+
+In statistics, we usually view the data points $x_1, ..., x_n$ as coming from some
+data generating process which is unknown to us. Let $F$ represent the unknown, true
+data generating distribution. We want to know things about $F$, for example its mean
+and variance. Ideally, we would like to compute $\E(X)$ and $\V(X)$ under the assumption
+that $X$ has distribution $F$. But, $F$ is unknown. So what do statisticians do?
+
+The \textit{plug-in principle} says that we can try to replace the unknown
+distribution $F$ with the empirical distribution $\hat F$ -- ``empirical" because
+$\hat F$ is computed from data -- and then compute quantities of interest,
+such as the mean and variance,
+using $\hat F$ in place of $F$.
+Theory\footnote{} says that for large $n$, $\hat F$ should well-approximate $F$.
+The plug-in principle
+appears in many forms in statistical practice; the exercise with the mean and variance above
+is a simple example.
+
+\subsection{Predictions}
+
+We conclude this session with a discussion of loss-minimization for prediction problems.
+Suppose we have a random variable $X$ coming from some distribution, call it $F$.
+In machine learning applications, we would like to predict the value of this random variable.
+What value should we pick?
+
+One possible framework is to define a \textit{loss function} $L(x, b)$, which is
+the penalty I pay for guessing $b$ if the true value of $X$ is $x$.
+The goal is to choose $b$ to minimize the expected loss, or \textit{risk}, defined as
+\begin{align}
+  r(b) = \E(L(X, b)).
+  \label{eq:risk}
+\end{align}
+
+\begin{exercise}[]
+  $\quad$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Suppose our penalty is the squared error, $L(x, b) = (x - b)^2$. Show that $b = \E(X)$ minimizes
+    \eqref{eq:risk}.
+    \item Suppose our penalty is the absolute error, $L(x, b) = |x - b|$. Show that the median of the
+    distribution of $X$ minimizes \eqref{eq:risk}.
+  \end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}[The newsvendor problem]
+  I am operating a newspaper stand, and I need to decide how many number of newspapers
+  I should stock every day.
+  Let $X$ be the number of newspapers I sell each day, which is a random quantity with
+  distribution $F$.
+  I buy newspapers at $C$  per item, and sell to customers for a price $P > C$.
+  Overstocking results in wasted inventory, while understocking results in lost sales.
+  By choosing to stock $b$ items, my profit when $x$ items
+  are sold is
+  \begin{align}
+    \textrm{Profit}(x, b) = P\min(b, x) - Cx.
+  \end{align}
+  Define my loss to be $L(x, b) = - \textrm{Profit}(x, b)$, so that
+  minimizing $L$ is equivalent to maximizing profit.
+
+  Show that for this profit model, the optimal $b$ is given by the $((P - C)/P)$-th
+  quantile of the distribution $F$.
+
+\end{exercise}
+
+$\quad$
+
+To minimize the risk in \eqref{eq:risk}, the data generating distribution
+$F$ is typically not known.
+The plug-in principle is in play once again, resulting in the idea of
+\textit{empirical risk minimization} in machine learning.
+Here, the expectation over $F$ in \eqref{eq:risk} is replaced with the empirical
+distribution $\hat F$.
+
+In the case of squared error loss, we saw that the optimal predictor was
+$\E(X)$. This is unknown if $X$ comes from an unknown distribution $F$.
+The plug in principle says that we could try to replace $F$ with $\hat F$.
+The resulting predictor is $\E(X)$ under $\hat F$, which by
+Exercise~\ref{exer:empirical} we showed is the equal to the sample mean.
+
+\end{document}
