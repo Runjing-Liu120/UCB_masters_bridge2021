@@ -1,0 +1,98 @@
+```{r}
+library(tidyverse)
+library(scales)
+library(patchwork)
+
+```
+
+
+```{r}
+# law of averages 
+set.seed(4432)
+
+flip_coin <- function(p = 0.5){
+  # flips a coin with with heads probability p
+  return(rbinom(1, 1, p))
+}
+
+n_trials <- 10000
+p <- 0.5
+
+sums <- 0
+averages <- c()
+
+for(i in 1:n_trials){
+  sums <- sums + flip_coin(p)
+  averages <- c(averages, sums / i)
+}
+
+data.frame(trial = 1:n_trials, 
+           running_average = averages) %>% 
+  ggplot() + 
+  geom_line(aes(x = trial, y = running_average)) + 
+  geom_hline(yintercept = p, color = 'red') + 
+  scale_x_continuous(trans = 'log10') + 
+  ylab('proportion of heads') + 
+  theme_bw()
+
+
+ggsave('../figures/law_of_averages.png', 
+       height = 3, 
+       width = 4, 
+       units = 'in')
+```
+
+```{r}
+# binomial distributions 
+
+plot_binom_pmf <- function(n, p){
+  
+  binom_df <- data.frame(x = 1:n, 
+                         pmf = dbinom(1:n, size = n, p = p))
+
+  binom_df %>% 
+    ggplot() + 
+    geom_col(aes(x = x, y = pmf), color = 'lightblue', fill = 'lightblue') + 
+    scale_x_continuous(breaks= pretty_breaks()) + 
+    ggtitle(paste0('Binomial(', n, ', ', p, ') distribution')) + 
+    ylab('P(x)') + 
+    theme_bw() 
+
+}
+
+
+p <- 0.2
+p1 <- plot_binom_pmf(10, p)
+p2 <- plot_binom_pmf(20, p)
+p3 <- plot_binom_pmf(50, p)
+p4 <- plot_binom_pmf(100, p)
+
+(p1 + p2) / (p3 + p4)
+
+ggsave('../figures/binomial_normal_approx.png', 
+       width = 6, 
+       height = 4, unit = 'in')
+
+```
+
+```{r}
+
+np <- 1
+
+plot_fixed_np <- function(n, np){
+  return(plot_binom_pmf(n, np/n))
+}
+
+p1 <- plot_fixed_np(10, np)
+p2 <- plot_fixed_np(20, np)
+p3 <- plot_fixed_np(50, np)
+p4 <- plot_fixed_np(100, np)
+
+(p1 + p2) / (p3 + p4)
+
+ggsave('../figures/binomial_poisson_approx.png', 
+       width = 6, 
+       height = 4, unit = 'in')
+
+
+```
