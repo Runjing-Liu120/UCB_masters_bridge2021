@@ -1,4 +1,4 @@
-%
+\text{Normal}%
 % This is the LaTeX template file for lecture notes for CS294-8,
 % Computational Biology for Computer Scientists.  When preparing
 % LaTeX notes for this class, please use this template.
@@ -257,12 +257,12 @@ construct a confidence interval using the following steps:
   $n\hat p \sim \text{Binomial}(n, p)$.
   In our polling example, $n = 200$ and $p$ is unknown.
   \item Using the normal approximation, we make the simplification that
-  $n\hat p \sim \mathcal{N}(np, np(1-p))$.
+  $n\hat p \sim \text{Normal}(np, np(1-p))$.
   \item By the shifting and scaling properties
   of a Normal,
   observe that
   \begin{align*}
-    Z = \frac{n\hat p - np}{\sqrt{np(1-p)}} \sim \mathcal{N}(0, 1).
+    Z = \frac{n\hat p - np}{\sqrt{np(1-p)}} \sim \text{Normal}(0, 1).
   \end{align*}
   \item For a standard normal variable, note that
   \begin{align*}
@@ -309,7 +309,7 @@ Assume $\sigma^2 < \infty$. Then the random variable
 \begin{align*}
   Z = \frac{\bar X_n - \mu}{\sigma / \sqrt{n}}
 \end{align*}
-is approximately distributed as $\mathcal{N}(0, 1)$.
+is approximately distributed as $\text{Normal}(0, 1)$.
 In other words
 \begin{align*}
 \P(Z\in[a, b])\approx \int_{a}^b

@@ -118,27 +118,36 @@
 \begin{document}
 \lecture{2}{Random variables}{Bryan Liu}{}{2}
 
-We introduce the notion of a random variable. We gave several examples
-already in the previous session: the sum of two dice roles, the time until
+We introduce the notion of a random variable.
+We saw several examples
+already in the previous session:
+the sum of two dice roles, the time until
 radioactive decay, the change in the stock price.
 
-Informally, a random variable is a variable that can take on several possible
-values, and the possible values are assigned a probability. Typically,
+Informally, a random variable $X$ is a variable
+that can take a set of possible
+values, called the \textit{range} of $X$,
+and the possible values in its range
+are assigned a probability.
+
+Typically,
 we will use capital letters towards the end of the alphabet to denote a random variable,
 and lower case letters to denote constants.
 For a random variable $X$ , we can ask, what is the probability that
-$X = x$? Or $X \leq x$? And so forth. We return to the same examples
+$X = x$? Or $X \leq x$? Or $a \leq X \leq b$? And so forth. We return to the same examples
 that opened the previous session for concreteness.
 
 \begin{example}[Rolling two dice]
   \label{ex:dice}
 
-  Two dice are rolled, and number of the top faces are recorded.
-  Let $S$ be the sum of the two dice rolls.
+  Two dice are rolled, and we record the
+  numbers showing on the top faces.
+  Let $S$ be the sum of the two numbers.
 
-  Assuming the die are fair, the probability that I roll a 5 is
+  We computed yesterday that if
+  the die are fair, the probability of rolling a 5 is
   \begin{align*}
-   \P(S = 5) = \frac{4}{36} = \frac{1}{9}
+   \P(S = 5) = \frac{4}{36} = \frac{1}{9}.
   \end{align*}
 
 \qed
@@ -171,6 +180,20 @@ that opened the previous session for concreteness.
 \qed
 \end{example}
 
+In comparing these examples with the motivating
+examples from yesterday, you should see that
+we have not really defined anything new.
+Yesterday, we introducted the notion of \textit{events}
+in an outcome space; here, random variables $X$
+determine events.
+Every event can be written as ``$X\in B$" where
+$B$ is a subset of the range of $X$.
+The probability of this event is written
+$\P(X\in B)$; yesterday, we simply wrote $\P(B)$.
+By including the variable $X$, we are more
+explicitly showing where the randomness is coming from
+(randomness is coming from $X$).
+
 \section{Distributions}
 
 In the above examples, each random variable was assigned probabilities for
@@ -193,10 +216,7 @@ heads in the $n$ trials. Show that
 
 When a random variable $X$ has assignemnt probabilities given by \eqref{eq:binom_distr},
 we say that $X$ has a Binomial distribution with parameters $(n, p)$. The two constants
-$n$ and $p$ specify this distribution. Often, we will write this as
-\begin{align*}
-  X\sim\text{Binomial}(n, p).
-\end{align*}
+$n$ and $p$ specify this distribution.
 
 Here are a few more examples of named distributions.
 
@@ -230,7 +250,7 @@ followed an exponential distribution.
 \begin{example}(Guassian)
 A random variable $X$ which takes values on the real line follows a
 \textit{Gaussian} or \textit{normal} distribution with mean $\mu$ and variance
-$\lambda$ if
+$\sigma^2$ if
 \begin{align}
   \P(X \in [l, u]) =
   \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
@@ -241,14 +261,29 @@ for all real numbers $\leq l \leq u$.
 
 Many natural phenomenon such as the distribution of human heights, IQ scores, and
 measurement error in physical experiments are well-approximated by the familiar
-bell-shaped curve that characterize the normal distribution.
+bell-shaped curve that characterizes the normal distribution.
 
 The normal distribution is ubiquitous in statistical inference as a result of
 the celebrated central limit theorem, which says, loosely, that averages
-of random variables will converge to a normal distribution. We will see
-a concrete example in the next session.
+of random variables will converge to a normal distribution. We will explore this further in the next session.
 \qed
 \end{example}
+
+
+\subsubsection*{Notation}
+
+When a random variable follows some distribution,
+we will use the $\sim$ symbol. For example,
+if $X$ is normally distributed with parameters
+$(\mu, \sigma^2)$, we will write
+\begin{align*}
+  X \sim \text{Normal}(\mu, \sigma^2).
+\end{align*}
+
+We will often use $F$ to denote a generic distribution,
+and will write $X\sim F$, read as ``$X$ follows distribution $F$", or ``$X$ is sampled from distribution $F$."
+
+\subsubsection*{Discrete vs continuous random variables}
 
 For a \textit{discrete} random variable $X$, the distribution of $X$ is specified
 by the probabilities $\P(X = x)$, for all possible values $x$ that the random variable $X$
