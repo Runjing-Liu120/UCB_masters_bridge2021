@@ -60,11 +60,11 @@
        \vspace{4mm}
        \hbox to 6.28in { {\Large \hfill Session {#1}: #2  \hfill} }
        \vspace{2mm}
-       \hbox to 6.28in { {\it Instructor: #3 \hfill} }
+       \hbox to 6.28in { {\it Instructor: #3 \hfill Contact: #4} }
       \vspace{2mm}}
    }
    \end{center}
-   \markboth{Section #1: #2}{Section #1: #2}
+   \markboth{Session #1: #2}{Session #1: #2}
    \vspace*{4mm}
 }
 
@@ -116,25 +116,20 @@
 \newcommand{\indi}{\mathds{1}}
 
 \begin{document}
-\lecture{2}{Random variables}{Bryan Liu}{}{2}
+\lecture{2}{Random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{2}
 
-We introduce the notion of a random variable.
-We saw several examples
-already in the previous session:
-the sum of two dice roles, the time until
-radioactive decay, the change in the stock price.
-
-Informally, a random variable $X$ is a variable
-that can take a set of possible
-values, called the \textit{range} of $X$,
-and the possible values in its range
-are assigned a probability.
+A random variable $X$ is a variable
+that represents a randomly produced number.
+The set of possible values the variable $X$ can take on is called the
+\textit{range}
+of $X$.
 
 Typically,
 we will use capital letters towards the end of the alphabet to denote a random variable,
 and lower case letters to denote constants.
 For a random variable $X$ , we can ask, what is the probability that
-$X = x$? Or $X \leq x$? Or $a \leq X \leq b$? And so forth. We return to the same examples
+$X = x$? Or $X \leq x$? Or $a \leq X \leq b$? And so forth.
+We return to the same examples
 that opened the previous session for concreteness.
 
 \begin{example}[Rolling two dice]
@@ -144,11 +139,18 @@ that opened the previous session for concreteness.
   numbers showing on the top faces.
   Let $S$ be the sum of the two numbers.
 
-  We computed yesterday that if
-  the die are fair, the probability of rolling a 5 is
-  \begin{align*}
-   \P(S = 5) = \frac{4}{36} = \frac{1}{9}.
-  \end{align*}
+  If the die are fair, then the probabilities of the values in the range of $S$
+  are shown in Table~\ref{tab:distr_s}
+  \begin{table}[!h]
+    \centering
+    \begin{tabular}{l|ccccccccccc}
+      k & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\\hline
+      $\P(S = k)$ & 1/36 & 2/36 & 3/36 & 4/36 & 5/36 & 6/36 & 5/36 & 4/36 & 3/36 & 2/36 & 1/36
+    \end{tabular}
+    \caption{The probability distribution of $S$.}
+    \label{tab:distr_s}
+  \end{table}
+
 
 \qed
 \end{example}
@@ -168,7 +170,7 @@ that opened the previous session for concreteness.
 \begin{example}(Stock prices)
   \label{ex:log_stocks}
   Let $\Delta \log S$ be the change in log price of a stock after one unit time.
-  The probability that the log change between two numbers $l$ and $u$ is modeled
+  The probability that the change lands between two numbers $l$ and $u$ is modeled
   as
   \begin{align}
     \P(\Delta \log S \in [l, u]) = \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
@@ -184,10 +186,10 @@ In comparing these examples with the motivating
 examples from yesterday, you should see that
 we have not really defined anything new.
 Yesterday, we introducted the notion of \textit{events}
-in an outcome space; here, random variables $X$
+in an outcome space; here, random variables
 determine events.
-Every event can be written as ``$X\in B$" where
-$B$ is a subset of the range of $X$.
+Every event can be expressed as $X\in B$ for some subset $B$, where
+$B$ is a subset of the range of the random variable $X$.
 The probability of this event is written
 $\P(X\in B)$; yesterday, we simply wrote $\P(B)$.
 By including the variable $X$, we are more
@@ -197,7 +199,7 @@ explicitly showing where the randomness is coming from
 \section{Distributions}
 
 In the above examples, each random variable was assigned probabilities for
-the values it could take on: we call these assignment probabilities
+the values it could take on. These probabilities are called the
 \textit{the distribution} of the random variable.
 
 Often these distributions have a name. The next exercise constructs our
@@ -286,7 +288,7 @@ and will write $X\sim F$, read as ``$X$ follows distribution $F$", or ``$X$ is s
 \subsubsection*{Discrete vs continuous random variables}
 
 For a \textit{discrete} random variable $X$, the distribution of $X$ is specified
-by the probabilities $\P(X = x)$, for all possible values $x$ that the random variable $X$
+by the probabilities $\P(X = x)$, for all values $x$ in the range of $X$
 can take. The sum of two dice rolls, Binomial random variables, and Poisson random variables
 are discrete.
 
@@ -294,18 +296,24 @@ For a \textit{continuous} random variable $X$, such as exponential or normal ran
 the probability that $\P(X = x) = 0$. Instead, probabilities were defined on sets
 using integrals (\ref{eq:exponential},\ref{eq:normal}).
 The integrand is called a \textit{probability density function} (or simply a ``density"). Loosely,
-we can interpret a density $f(x)$ as specifying the probability that $X$ is in an infintessimal
-interval around $x$, that is
+we can interpret a density $f(x)$ as specifying the probability that $X$ lies
+an infintessimal interval around $x$, that is
 \begin{align*}
   \P(X \in dx) = f(x)\;dx.
+\end{align*}
+
+For generic sets $[a, b]$ in $\R$, we sum the infintessimal probabilities
+to obtain
+\begin{align*}
+  \P(X\in[a, b]) = \int_a^b f(x)\;dx
 \end{align*}
 
 In later sessions, we will have more exercises on manipulating probability density functions.
 Our current definition will suffice for the concepts introduced below.
 
 \subsection{Conditional distributions}
-Definitions for conditional probabilities and independence are similarly defined
-as before in the context of random variables.
+Last session, we defined conditional probabilities and independence for events.
+These definitions are similarly defined in the context of random variables.
 \begin{itemize}
   \item {\bf Conditional distributions: }\footnote{
   We will come back to this formula specifically for continuous random variables ...
@@ -328,9 +336,36 @@ as before in the context of random variables.
   by the values of $Y$.
 \end{itemize}
 
+\begin{example}[Conditional distributions and independence]
+Suppose I roll two die.
+Let $X_1$ and $X_2$ be the result of first and second dice, respectively.
+$X_1$ and $X_2$ are independent random variables, because conceivably,
+the value of one dice roll does not affect the probability distribution of the other dice roll:
+each dice has probability $1/6$ on numbers $\{1, ..., 6\}$
+regardless of the outcome of the other dice.
+
+Let $S = X_1 + X_2$ be the sum of two dice rolls.
+$X_1$ and $S$ are not independent. For example, given that $X_1 = 3$, then
+$S$ has the conditional distribution displayed in Table~\ref{tab:cond_s}
+(compare with Table~\ref{tab:distr_s}).
+
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l|ccccccccccc}
+    k& 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\\hline
+    $\P(S = k)$ & 0 & 0 & 1/6 & 1/6 & 1/6 & 1/6 & 1/6 & 1/6 & 0 & 0 & 0
+  \end{tabular}
+  \caption{Conditional distribution of $S$ given $X_1 = 3$.}
+  \label{tab:cond_s}
+\end{table}
+
+
+\end{example}
+
 \section{Expectation and variance}
 
-We now turn computing scalar quantities which summarize random variables and their distributions.
+We now turn to computing scalar quantities which summarize random variables
+and their distributions.
 We start with
 
 \fbox{\begin{minipage}{\textwidth}
@@ -391,18 +426,18 @@ independence for multiplication.
 
 \begin{exercise}[Markov's inequality]
   Let $X$ be a non-negative random variable with expectation $\mu$.
-  Show that for any number $a \geq 0$, that
+  Show that for any number $a \geq 0$
   \begin{align}
     \P(X \geq a) \leq \frac{\E(X)}{a}
     \label{eq:markov}
   \end{align}
 \end{exercise}
 
-We use the definition of an expectation to broaden the scope of distributional summaries.
+We use the definition of an expectation to broaden our scope of distributional summaries.
 Next, we consider the \textit{variance} of a random variable.
 
 \fbox{\begin{minipage}{\textwidth}
-Let $\mu = \E(X)$. \textit{variance} of a random variable $X$, abbreviated
+Let $\mu = \E(X)$. The \textit{variance} of a random variable $X$, abbreviated
 $\V(X)$, is defined as the expected squared deviation of $X$ from $\mu$,
 \begin{align*}
 \V(X) = \E\Big((X - \mu)^2\Big).
@@ -442,8 +477,8 @@ Next, we now record some properties of variances:
 
 \begin{exercise}[iid random variables]
   Suppose $X_1,..., X_n$ are random variables drawn independently from a
-  common distribution. Let $\mu$ and $\sigma^2$ be the mean and variance,
-  respectively, of this distribution. Let
+  common distribution $F$. Let $\mu$ and $\sigma^2$ be the mean and variance,
+  respectively, of the distribution $F$. Let
   \begin{align*}
     \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
   \end{align*}
@@ -462,29 +497,27 @@ Next, we now record some properties of variances:
   \end{align*}
 \end{exercise}
 
-In statistics, we are often interested in the the \textit{tail probability},
+Chebychev's inequality puts an upper bound on the \textit{tail probability},
 the probability that a random variable $X$ is far from its mean.
-Chebychev's inequality puts an upper bound on how large this probability can be.
 
-In hypotheis testing, this random variable $X$ would represent a test statistic;
+Tail probabilities are of particular interest in hypotheis testing.
+Here, the random variable $X$ would represent a test statistic;
 if the the deviation of the observed statistic from its mean occurs with small probability under
 the null hypothesis,
 then we would consider this evidence in favor or \textit{rejecting} the null.
-Chebychev inequality is one way to show that the probability of deviations are small,
-which may allow us to reject a null hypothsis.
-Notice that this inequality does not depend on distributional assumptions of $X$
-(such as normality); we only need to know (or be able to estimate) its mean and variance.
+Chebychev inequality is one way to show that the probability of deviations are small.
+This inequality is useful because it does not depend on distributional assumptions of $X$
+(such as normality); we only need to know (or be able to approximate) its mean and variance.
 
 \begin{exercise}[Empirical distribution]
-Suppose I have collected $n$ data points $x_1, ..., x_n$. The \textit{empirical distrbution}
-is defined as the distribution that places mass $1 / n$ on each data point.
-Let $\hat F$ be the empirical distribution, so we say that a random variable $X$
-has distribution $\hat F$ if
+Suppose I have collected $n$ data points $x_1, ..., x_n$.
+The \textit{empirical distrbution}
+is defined as
 \begin{align*}
   \P(X = x) = \frac{\#\{x_i = x\}}{n}.
 \end{align*}
 
-Show that if $X$ has distribution $\hat F$, then
+Show that if $X$ is drawn from the empirical distribution, then
 \begin{enumerate}[label = (\alph*)]
   \item $\E(X) = \frac{1}{n}\sum_{i=1}^n x_i$, the mean of the $n$-data points.
   \item What is $\V(X)$?
@@ -500,20 +533,21 @@ that $X$ has distribution $F$. But, $F$ is unknown. So what do statisticians do?
 
 The \textit{plug-in principle} says that we can try to replace the unknown
 distribution $F$ with the empirical distribution $\hat F$ -- ``empirical" because
-$\hat F$ is computed from data -- and then compute quantities of interest,
+$\hat F$ is constructed from observed data -- and then compute quantities of interest,
 such as the mean and variance,
 using $\hat F$ in place of $F$.
-Theory\footnote{} says that for large $n$, $\hat F$ should well-approximate $F$.
+Theory\footnote{specifically, the Glivenko–Cantelli theorem}
+says that for large $n$, $\hat F$ should well-approximate $F$.
 The plug-in principle
 appears in many forms in statistical practice; the exercise with the mean and variance above
 is a simple example.
 
 \subsection{Predictions}
 
-We conclude this session with a discussion of loss-minimization for prediction problems.
-Suppose we have a random variable $X$ coming from some distribution, call it $F$.
+We conclude this session with a discussion of risk-minimization for prediction problems.
+Suppose we have a random variable $X$ coming from some distribution $F$.
 In machine learning applications, we would like to predict the value of this random variable.
-What value should we pick?
+How should we make this prediction?
 
 One possible framework is to define a \textit{loss function} $L(x, b)$, which is
 the penalty I pay for guessing $b$ if the true value of $X$ is $x$.
@@ -536,21 +570,22 @@ The goal is to choose $b$ to minimize the expected loss, or \textit{risk}, defin
 
 
 \begin{exercise}[The newsvendor problem]
-  I am operating a newspaper stand, and I need to decide how many number of newspapers
+  I am operating a newspaper stand, and I need to decide the number of newspapers
   I should stock every day.
-  Let $X$ be the number of newspapers I sell each day, which is a random quantity with
+  Let $X$ be the number of newspapers I sell each day, which I model as
+  a random quantity with
   distribution $F$.
-  I buy newspapers at $C$  per item, and sell to customers for a price $P > C$.
+  I buy newspapers at $C$-dollars per paper, and sell to customers for a price $P > C$.
   Overstocking results in wasted inventory, while understocking results in lost sales.
   By choosing to stock $b$ items, my profit when $x$ items
   are sold is
   \begin{align}
     \textrm{Profit}(x, b) = P\min(b, x) - Cx.
   \end{align}
-  Define my loss to be $L(x, b) = - \textrm{Profit}(x, b)$, so that
+  Define the loss to be $L(x, b) = - \textrm{Profit}(x, b)$, so that
   minimizing $L$ is equivalent to maximizing profit.
 
-  Show that for this profit model, the optimal $b$ is given by the $((P - C)/P)$-th
+  Show that for this profit model, the optimal $b$ is given by the $(\frac{P - C}{P})$-th
   quantile of the distribution $F$.
 
 \end{exercise}
@@ -559,15 +594,17 @@ $\quad$
 
 To minimize the risk in \eqref{eq:risk}, the data generating distribution
 $F$ is typically not known.
-The plug-in principle is in play once again, resulting in the idea of
+The plug-in principle is in play once again, resulting in technique of
 \textit{empirical risk minimization} in machine learning.
 Here, the expectation over $F$ in \eqref{eq:risk} is replaced with the empirical
 distribution $\hat F$.
 
-In the case of squared error loss, we saw that the optimal predictor was
-$\E(X)$. This is unknown if $X$ comes from an unknown distribution $F$.
-The plug in principle says that we could try to replace $F$ with $\hat F$.
-The resulting predictor is $\E(X)$ under $\hat F$, which by
+In the case of squared error loss, we saw that the optimal predictor is the
+expectation of $F$.
+The optimal predictor is unknown if $X$ comes from an unknown distribution $F$.
+The plug in principle says that we could try to replace $F$ with $\hat F$,
+the empirical distribuion.
+The resulting predictor is the expectation of $\hat F$, which by
 Exercise~\ref{exer:empirical} we showed is the equal to the sample mean.
 
 \end{document}

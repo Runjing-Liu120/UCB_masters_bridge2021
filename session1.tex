@@ -60,11 +60,11 @@
        \vspace{4mm}
        \hbox to 6.28in { {\Large \hfill Session {#1}: #2  \hfill} }
        \vspace{2mm}
-       \hbox to 6.28in { {\it Instructor: #3 \hfill} }
+       \hbox to 6.28in { {\it Instructor: #3 \hfill Contact: #4} }
       \vspace{2mm}}
    }
    \end{center}
-   \markboth{Section #1: #2}{Section #1: #2}
+   \markboth{Session #1: #2}{Session #1: #2}
    \vspace*{4mm}
 }
 
@@ -115,7 +115,7 @@
 \newcommand{\indi}{\mathds{1}}
 
 \begin{document}
-\lecture{1}{Basic concepts}{Bryan Liu}{}{1}
+\lecture{1}{Basic concepts}{Bryan Liu}{runjing\_liu@berkeley.edu}{1}
 
 \section{Probability spaces}
 
@@ -172,7 +172,7 @@ The building blocks of probability theory are three ingredients:
   Events are subsets of the positive real line. For example, one
   event might be ``it takes at least 3 hours for the particle to decay".
 
-  We define the probability of this event as
+  The probability of this event is given by
   \begin{align*}
     \P(\text{at least 3 hours for the particle to decay}) =
     \int_{3}^\infty \lambda \exp^{-\lambda t} \;dt,
@@ -184,7 +184,7 @@ The building blocks of probability theory are three ingredients:
     A = \{t : t \geq l \text{ and } t \leq u\},
   \end{align*}
   where $t$ is the decay time, while $l$ and $u$ are real numbers.
-  We define the probability of such events as
+  The probability of such events is
   \begin{align}
     \P(A) =
     \int_{l}^u \lambda \exp^{-\lambda t} \;dt.
@@ -250,7 +250,7 @@ Probabilities must satisfiy
 From these basic rules we can derive
 \begin{itemize}
   \item \textbf{The complement rule}: $\P(\text{not} A) = 1 - \P(A)$.
-  \item \textbf{The difference rule}: if $A\subseteq B$, then $\P(B \text{but not} A) = \P(B) - \P(A)$.
+  \item \textbf{The difference rule}: if $A\subseteq B$, then $\P(B \text{ but not } A) = \P(B) - \P(A)$.
   \item \textbf{Inclusion-exclusion}: $\P(A\cup B) = \P(A) + \P(B) - \P(A\cap B)$.
 \end{itemize}
 IN CLASS: proof by picture.
@@ -263,7 +263,7 @@ Next, we extend the inclusion-exclusion principle to derive Boole's inequality.
   \begin{enumerate}[label = (\alph*)]
     \item Argue that for any events $A, B$,
     \begin{align*}
-      \P(A \cup B)\leq \P(A) \cup \P(B)
+      \P(A \cup B)\leq \P(A) + \P(B)
     \end{align*}
     \item Use induction to argue that for any set of events $B_1, ..., B_n$,
     \begin{align}
@@ -281,12 +281,12 @@ and for each trial we set up an $\alpha$-level
 hypothesis test.
 Let $B_i$ be the event that we reject the $i$-th hypothesis.
 If our test is correctly set-up, then we must have $\P(B_i) = \alpha$ for all $i$,
-where $\P$ is the probability distribution under the null hypothesis.
+where the probabiilty $\P$ is computed under the assumptions of the null hypothesis.
 
 Notice however, that in general, we must have $\P(\cup_i B_i) \geq \alpha$,
 so the probability that we make at least one false rejection is greater than $\alpha$.
 
-To control the probability of making even one false rejection then, we must then design
+To control the probability of making even one false rejection then, we can design
 a test such that the probability of rejection for each test is less than $\alpha / n$ --
 that is, $\P(B_i) \leq \alpha / n$ for all $i$. In this case,
 Boole's inequality shows that
@@ -303,7 +303,7 @@ correction of general interest.
 However, correcting an $\alpha$-rejection level to an $(\alpha / n)$-rejection level
 considerably decreases the power of the tests (i.e. it is harder to make any true rejections).
 When we know more about the nature of the events, e.g. their correlation structure,
-we can employ less stringent corrections.
+it is often possible to employ less stringent corrections.
 
 \qed
 \end{example}
@@ -427,7 +427,7 @@ For a partition of all possible outcomes $B_1, ..., B_n$,
 \end{exercise}
 
 \begin{exercise}[Identical or fraternal twins]\footnote{
-  Example taken from Chapter 3 of REF.
+  Example taken from Chapter 3 of \url{https://web.stanford.edu/~hastie/CASI/}.
   }
   A mother finds out via sonogram that she is going to have twin boys.
   She wants to know, what is the probability that her twins will be
