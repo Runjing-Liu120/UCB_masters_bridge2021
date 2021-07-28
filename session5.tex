@@ -223,9 +223,84 @@ $\{(x, y) : 0 < x < y < 1\}$.
 
 
 \begin{exercise}[Independent exponential variables]
-TODO
+Let $X$ and $Y$ be independent and exponentially
+distributed random variables with parameters $\lambda$ and $\mu$, respectively. Calculate $\P(X<Y)$.
 \end{exercise}
 
+\section{Sums of random variables}
 
+Recall that we have already seen that expectations are additive: for any two random variables $X$, $Y$
+(regardless of independence), we have
+\begin{align*}
+  \E(X + Y) = \E(X) + \E(Y)
+\end{align*}
+
+We now give a formula for densities.
+
+\fbox{\begin{minipage}{\textwidth}
+If $X, Y$ has density $f(x, y)$, then $X + Y$
+has density
+\begin{align*}
+  f_{X+Y}(z) &= \int_{-\infty}^\infty f(x, z-x)\; dx,\\
+\end{align*}
+
+If $X$ and $Y$ are independent, then
+the formula simplifies to
+\begin{align*}
+  f_{X+Y}(z) &= \int_{-\infty}^\infty f_X(x)f_Y(z-x)\; dx,\\
+\end{align*}
+
+\end{minipage}}
+
+\begin{exercise}[Sum of exponential random variables]
+Let $X$ and $Y$ be independent exponentially distributed
+random variables with rate $\lambda$. Compute
+the density $X + Y$.
+\end{exercise}
+
+We record a fact about Normal random variables, to save
+us the tedium of doing integrals:
+
+\fbox{\begin{minipage}{\textwidth}
+Let $X \sim \mathcal{N}(\mu, \sigma^2)$ and
+independently, let $Y\sim\mathcal{N}(\lambda, \tau^2)$.
+Then $X + Y$ is Normally distributed with mean
+$\mu + \lambda$ and variance $\sigma^2 + \tau^2$.
+
+\end{minipage}}
+
+\begin{exercise}[Distribution of heights]
+Suppose heights in a large populatoin are approximately
+normally distributed with a mean of 1.78m with a standard
+deviaion of 5cm. Suppose a group of 100 people are picked
+at random from this population.
+\begin{enumerate}[label = (\alph*)]
+  \item What is the probability that the tallest person in this group is over 1.93m?
+  \item What is the probability that the average height
+  of people in the group is over 1.8cm?
+  \item Suppose the distribution of heights was not normal, but some other distribution with the given mean and SD. Would the probability to (a) or (b) change,
+  or whould they remain approximately the same?
+\end{enumerate}
+
+\end{exercise}
+
+\begin{exercise}[Catching BART]
+Suppose BART is scheduled to arrive at Downtown
+Berkeley station at 8:10am, but its actual arrival time
+is normally distributed with mean 8:10am and standard
+deviation 40 seconds.
+Suppose I try to arrive at the BART station at 8:09am, but
+my arrival time is actually a normal distribution with mean
+8:09am with standard deviation 30 seconds.
+\begin{enumerate}[label = (\alph*)]
+  \item What percentage of the time do I arrive at the
+  corner before BART is scheduled to arrive?
+  \item What percentage of time do I arrive
+  at the station before BART?
+  \item If arrive at the stop at 8:09am, but BART still
+  hasn't come by 8:12AM, what is the probabiliy that I have already missed BART?
+\end{enumerate}
+
+\end{exercise}
 
 \end{document}
