@@ -1,0 +1,421 @@
+%
+% This is the LaTeX template file for lecture notes for CS294-8,
+% Computational Biology for Computer Scientists.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi.
+%
+% This template is based on the template for Prof. Sinclair's CS 270.
+
+\documentclass[11pt]{article}
+\usepackage{charter}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+
+\setlength{\oddsidemargin}{0 in}
+\setlength{\evensidemargin}{0 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+\newcommand{\PP}{\mathbb{P}}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[5]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#5}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Masters Bridge Program
+                        \hfill Summer 2021} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Session {#1}: #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it Instructor: #3 \hfill Contact: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Session #1: #2}{Session #1: #2}
+   \vspace*{4mm}
+}
+
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[]{Exercise}
+\newenvironment{proofof}[1]{{\em Proof of #1.}}{\hfill%\rule{2mm}{2mm}
+\qed}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\renewcommand{\H}{\mathcal{H}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\MAP}{\mathrm{MAP}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\Rp}{\mathbb{R}_{>0}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\text{Var}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\lbr}{\langle}
+\newcommand{\rbr}{\rangle}
+\newcommand{\indi}{\mathds{1}}
+
+\begin{document}
+\lecture{4}{Continuous random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{4}
+
+\section{Poisson arrivals}
+
+Recall from last session we discussed the following equivalence (and proved
+one direction of the equivalence as an exercise):
+
+\fbox{\begin{minipage}{\textwidth}
+\textbf{Two descriptions of Poisson arrivals}
+
+\begin{enumerate}[label = (\Roman*)]
+  \item The \textit{number of arrivals} in an interval time of length $t$ is
+  $\text{Poisson}(\lambda t)$, and the number of arrivals in disjoint
+  time intervals are independent.
+
+  \item The \textit{time between arrivals}
+  are independent and distributed as $\text{Exponential}(\lambda)$.
+\end{enumerate}
+
+\end{minipage}}
+
+\begin{exercise}[Arrivals at a coffee shop]
+Suppose customers arrive at a coffee shop at an average, time-invariant
+rate of 12 customers per hour according to a Poisson arrival process.
+%
+% Let $N(t_1, t_2)$ be the random variable representing the number of arriving customers
+% between times $t_1$ and $t_2$.
+% Fro concreteness, let $t = 0$ refer to 8am, while $t > 0$ refers to
+% the number of hours elapsed after 8am.
+%
+% Let $W_1$ be the time of the first arrival after 8am, and let
+% $W_i$ for $i > 1$ be the time between subsequent arrivals.
+%
+Compute
+
+\begin{enumerate}[label = (\alph*)]
+  \item The probability that no one arrives between 8am and 8:30am.
+  \item The probability that first customer arrives before 8:30am.
+  \item The probaiblity that no one arrives between 8 and 8:30am,
+  and at most four people arrive between 8:30 and 9am.
+  \item The probability that the fourth customer arrives within 10 minutes
+  of the third customer.
+  \item The probability that the first arrival takes less than 10 minutes
+  while the time between the second and third arrival is more than 30 minutes.
+  \item The probability that the 10th customer takes more than an hour to arrive.
+\end{enumerate}
+
+\end{exercise}
+
+\section{More on exponential distributions}
+The exponential distribution if often used
+in engineering applications to model the time-to-failure of some
+component. We record a key property of the exponential distribution:
+\begin{exercise}[The memoryless property]
+Show that if the random variable $T$ is exponential, then
+\begin{align*}
+  \P(T > t + s | T > t) = \P(T > s).
+\end{align*}
+
+\end{exercise}
+
+The exercise above says that if the component survives until time $t$,
+then it is as good as new --
+given that the component survived until time $t$,
+the chance that it survives another $s$ units of time after time $t$ is equal to
+the chance that it survives to $s$ in the first place.
+
+This is a good model for radioactive decay, and for some kinds of electrical
+components that do not wear out, but rather just fail at unpredictible times.
+On the other hand, this model would \textit{not} be a good model for human lifetimes.
+To construct more complex functions for survival times, we need
+a discussion of the meaning of the rate $\lambda$.
+
+\subsection{Hazard rates and survival functions}
+
+We think of $\lambda$ as the instantaneous \textit{hazard rate} --
+that is, the probability of failure or death just after time $t$, given survival up to
+time $t$. In generality, we will let $\lambda$ depend on $t$,
+in which case we write $\lambda(t)$.
+
+In this intepretation,
+\begin{align*}
+\lambda(t) dt  = \P(T\in dt | T > t) = \frac{\P(T \in dt)}{\P(T > t)} =
+\frac{f(t) \; dt}{G(t)},
+\end{align*}
+where $f(t)$ is the probability density function of the random variable $T$,
+and $G(t)$ is the \textit{survival function}
+\begin{align*}
+G(t) := \P(T \geq t) = \int_{t}^\infty f(t)\; dt.
+\end{align*}
+From this, we conclude that
+\begin{align}
+  \lambda(t) = \frac{f(t)}{G(t)},
+  \label{eq:hazard}
+\end{align}
+
+\begin{exercise}[Constant hazard rates]
+Show that an exponential random variable has a constant hazard rate.
+\end{exercise}
+
+The assumption of a constant hazard rate is certainly not true
+for human lifetimes -- because humans age, and so
+we would expect $\lambda$ to be an increasing function of $t$.
+\footnote{In an even more detailed model, we might
+expect our hazard rate to \textit{decrease} from birth to our thirties,
+before increasing again. }
+
+In many applications, engineering and medical, it is more
+convenient to model
+$\lambda(t)$, rather than directly construct probability density functions.
+The next exercise shows their relationship.
+
+\begin{exercise}[Survival and hazards]
+
+$\quad$
+
+\begin{enumerate}[label=(\alph*)]
+  \item Use the fundamental theorem of calculus to show that
+  $f(t) = -\frac{dG(t)}{dt}$.
+  \item Then use (a) and \eqref{eq:hazard} to show that
+  \begin{align*}
+    G(t) = \exp\left(-\int_0^t\lambda(u)\;du\right)
+  \end{align*}
+\end{enumerate}
+
+\end{exercise}
+
+
+We conclude this section with a two concrete examples.
+\begin{exercise}[Constant hazards]
+Show that if a random lifetime $T$ has a constant hazard rate,
+then $T$ is exponentially distributed.
+\end{exercise}
+
+\begin{exercise}[The Weibull distribution]
+Let $\lambda(t) = \lambda \alpha t^{\alpha -1}$ for constants $\lambda > 0$
+and $\alpha > 0$.
+Show that
+\begin{enumerate}[label = (\alph*)]
+  \item $\P(T \geq t) = e^{-\lambda t^\alpha}$.
+  \item The density $f(t) = \lambda \alpha t^{\alpha -1}e^{-\lambda t^\alpha}$.
+\end{enumerate}
+\end{exercise}
+
+\section{Continuous random variables: manipulating p.d.fs}
+
+For the remainder of this session, and all of next session,
+we go through some exercises in manipulating probability density functions.
+
+The simplist continuous random variable is the \textit{uniform random variable}
+which has a constant density.
+
+\fbox{\begin{minipage}{\textwidth}
+\textbf{Uniform random variables}
+
+A random variable $X$ has a uniform distribution on the interval $[a, b]$
+if $X$ has density
+
+\begin{align*}
+  f(x) = \begin{cases}
+  \frac{1}{b - a} &\text{if } x \in [a, b] \\
+  0 &\text{otherwise}
+\end{cases}
+\end{align*}
+
+\end{minipage}}
+
+Can you explain the denominator $(b - a)$?
+
+\begin{exercise}[uniform random variables]
+Let $X \sim \text{Uniform}(a, b)$. Compute $\E(X)$ and $\V(X)$.
+\end{exercise}
+
+\subsection{Change of variables}
+
+\fbox{\begin{minipage}{\textwidth}
+
+Let $X$ be a random variable with density $f_X(x)$ with range $(a, b)$.
+Let $Y = g(X)$ for a strictly monotone and differential function $g$.
+
+Then the range of $Y$ is an interval with endpoints $g(a)$ and $g(b)$.
+
+The density $f_Y(y)$ on this interval is
+\begin{align*}
+  f_Y(y) = f_X(x) / |g'(x)|
+\end{align*}
+
+\end{minipage}}
+
+\begin{exercise}
+Let $U\sim \text{Uniform}[a, b]$. What is the density of $U^2$?
+\end{exercise}
+
+
+\begin{exercise}
+Let $T \sim \text{Exponential}(\lambda)$. What is the distribution of
+$T^{1/2}$?
+
+More generally, compute the distribution of $T^{1/\alpha}$ for $\alpha > 0$.
+Do you recognize this distribution?
+
+\end{exercise}
+
+\subsection{Cumulative distribution functions}
+
+So far, we have primarily characterized continuous random
+variables with using their probability density function.
+
+Another common way to define random variables is using
+their \textit{cumulative distribution function} or
+\textit{c.d.f}, given by
+\begin{align}
+  F(x) = \P(X \leq x).
+  \label{eq:cdf}
+\end{align}
+
+For continuous random variables,
+the relationship between the cumulative distribution
+function and the probability density function is given
+by the fundamental theorem of calculus.
+
+\fbox{\begin{minipage}{\textwidth}
+The cumulative distribution function in terms
+of the probability density function:
+\begin{align*}
+  F(x) &= \int_{-\infty}^x f(u)\; du,\\
+\end{align*}
+and vice versa,
+\begin{align*}
+  f(x) &= \frac{d}{dx}F(x)
+\end{align*}
+
+\end{minipage}}
+
+\begin{exercise} Let $X\sim \text{Uniform}(0, 1)$.
+  What is the c.d.f. of $X$?
+\end{exercise}
+
+\begin{exercise} Let $X\sim \text{Exponential}(\lambda)$.
+  What is the c.d.f. of $X$?
+\end{exercise}
+
+\begin{exercise}[cdf for discrete random variables]
+  The definition in \eqref{eq:cdf} holds
+  regardless if the random variable $X$ is continuous
+  or discrete. However, if $X$ is discrete, $F$
+  will not be continuous.
+
+  As a concrete example, let $X$ be the result of a
+  single dice roll. What is the c.d.f of $X$?
+
+  How does the c.d.f relate to the probability mass
+  function of $X$?
+
+\end{exercise}
+
+
+\subsubsection*{Quantiles and
+the inverse distribution function}
+
+Let $p\in[0, 1]$. Then the $p$-th quantile of
+the distribution $F$ is the value $x$ that
+satisfies
+\begin{align*}
+  F(x) = p.
+\end{align*}
+Inverting $F$, the $p$-th quantile is given by
+\begin{align*}
+  x = F^{-1}(p).
+\end{align*}
+We call $F^{-1}$ the inverse distribution function.
+
+\begin{exercise}
+  For the $\text{exponential}(\lambda)$ distribution,
+  find a formula for the $p$-th quantile.
+  \label{ex:exp_inv_cdf}
+\end{exercise}
+
+The inverse distribution function can be used to
+simulate values of a random variable.
+Suppose we want to simulate values of a random variable
+with known c.d.f. $F$.
+In order to do so, first sample $U\sim\text{Uniform}(0, 1)$, and then compute $F^{-1}(U)$.
+
+\begin{exercise}(simulation of a random variable)
+Let $U\sim\text{Uniform}(0, 1)$.
+Lef $F$ be a valid c.d.f
+(that is, a monotonically increasing function
+with values between 0, 1). Show that
+the transformed random variable $X = g(U)$,
+with $g = F^{-1}$, has c.d.f. $F$.
+\end{exercise}
+
+\begin{exercise}
+  Use the inverse distribution function of
+  the exponential distribution computed in
+  Exercise~\ref{ex:exp_inv_cdf} and the change of
+  variables formula to directly show that
+  $F^{-1}(U)$ is an exponential random variable.
+\end{exercise}
+
+
+\end{document}
