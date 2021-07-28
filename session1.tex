@@ -440,10 +440,11 @@ For a partition of all possible outcomes $B_1, ..., B_n$,
   }
   A mother finds out via sonogram that she is going to have twin boys.
   She wants to know, what is the probability that her twins will be
-  identical rather than fraternal? The doctor tells her that one-third of twin births
+  identical rather than fraternal? The doctor tells her that in the United States, one-third of twin births
   are identical, while two-thirds are fraternal.
   For identical twins, the siblings must be of the same sex; for fraternal births,
-  the siblings have a 50/50 chance of being either same sex or opposite sex.
+  each sibling has a 50/50 chance of being male or female,
+  independently of each other.
   Apply Bayes rule to compute probability that the mother's twins will be fraternal.
 \end{exercise}
 
@@ -479,6 +480,8 @@ individual does not have the disease.
   \label{ex:diagnostic}
 \end{exercise}
 
+\subsubsection*{Discussion}
+
 Bayes rule is a mathematical formula for turning observed data into
 inferences concerning unknown quantities.
 In the previous exercise, the observed data is that I have a positive diagnostic test.
@@ -509,8 +512,8 @@ argues Bin Yu in
 \url{https://www.stat.berkeley.edu/~binyu/ps/papers2018/AI+Stat18.pdf}
 }
 Let us take scenario (c) in Exercise~\ref{ex:diagnostic}.
-Here, the implicit theoretical population is the set of
-individuals with similar genetic information as me.
+Here, the \textit{implicit theoretical population is the set of
+individuals with similar genetic information as me}.
 Suppose I sample 1000 individuals from this theoretical
 population, and test each individual.
 Then each individual would fall in one of four categories:
@@ -540,8 +543,22 @@ have the disease. I conclude then,
 that I have a $49 / 144 = .34$ myself
 of having this disease.
 
-This demonstrates the frequency interpretation of
-the conditoinal probability: if I sample from
-a larger population, then res
+This demonstrates the frequency interpretation
+probability: if I sample a set of
+individuals from my theoretical population,
+then I would expect
+about 34\% of these individuals who test
+positive will be actually diseased.
+Notice that this probability depends on the
+prevalence of this disease in the population -- i.e.
+how I define my theoretical population.
+
+Bayes rule is a provable mathematical fact about
+probabities and events.
+Going from mathematical principles to real data
+applications however, requires care in
+thinking about what probabilties, and our resulting
+inferences actually tell us about the worl.
+
 
 \end{document}
