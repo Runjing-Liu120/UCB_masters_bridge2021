@@ -117,6 +117,15 @@
 \begin{document}
 \lecture{1}{Basic concepts}{Bryan Liu}{runjing\_liu@berkeley.edu}{1}
 
+The materials for this workshop are
+adapted from Jim Pitman's undergraduate text on probability.
+A pdf can be found for free at
+\begin{center}
+  \url{https://link.springer.com/book/10.1007/978-1-4612-4374-8}
+\end{center}
+
+This first session comes from Chapter 1.
+
 \section{Probability spaces}
 
 The building blocks of probability theory are three ingredients:
@@ -134,9 +143,9 @@ The building blocks of probability theory are three ingredients:
 
 \begin{example}[Rolling two dice]
 
-  Two dice are rolled, and number of the top faces are recorded.
+  Two dice are rolled, and number on the top faces are recorded.
 
-  The \textit{outcome space} are the tuples,
+  The \textit{outcome space} are the pairs,
 
 \begin{align*}
   \Omega = \begin{Bmatrix}
@@ -156,7 +165,7 @@ The building blocks of probability theory are three ingredients:
     A = \begin{Bmatrix} (1, 4), & (2, 3), & (3, 2), & (4, 1) \end{Bmatrix}
   \end{align*}
   %
-  Assuming the die are fair, each tuple in the event space is assigned to have
+  Assuming the die are fair, each pair in the event space is assigned to have
   probability $1/36$, and the probability of the event above is
   \begin{align*}
    \P(\text{the sum of the two numbers is 5}) = \frac{4}{36} = \frac{1}{9}
@@ -181,13 +190,13 @@ The building blocks of probability theory are three ingredients:
 
   In general, an event $A$ is of the form
   \begin{align*}
-    A = \{t : t \geq l \text{ and } t \leq u\},
+    A = \{t : t \geq a \text{ and } t \leq b\},
   \end{align*}
-  where $t$ is the decay time, while $l$ and $u$ are real numbers.
+  where $t$ is the decay time, while $a$ and $b$ are real numbers.
   The probability of such events is
   \begin{align}
     \P(A) =
-    \int_{l}^u \lambda \exp^{-\lambda t} \;dt.
+    \int_a^b \lambda \exp^{-\lambda t} \;dt.
     \label{eq:exponential_ex}
   \end{align}
 
@@ -206,21 +215,21 @@ The building blocks of probability theory are three ingredients:
 
   We model the log ratio as a random quantity.
   The outcome space is the real line. Events are subsets of the real line,
-  for example, ``the change in log stock price is greater than $l$ but less than $u$",
-  $l$ and $u$ real numbers. In math, an event $A$ is the set
+  for example, ``the log ratio is greater than $a$ but less than $b$",
+  $a$ and $b$ real numbers. In math, an event $A$ is the set
   \begin{align*}
-    A = \{\Delta \log S \in [l, u]\}.
+    A = \{\Delta \log S \in [a, b]\}.
   \end{align*}
 
   The probability of such events are modeled as
   \begin{align}
-    \P(A) = \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+    \P(A) = \int_a^b \frac{1}{\sqrt{2\pi\sigma^2}}
     \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
     \label{eq:normal_ex}
   \end{align}
 
   Here, $\mu$ is the \textit{exponential growth rate of the stock} (exponential because
-  we are working with log-prices) and $\sigma^2$ is the \textit{volitility} of the stock.
+  we are working with log-prices) and $\sigma^2$ is the \textit{volatility} of the stock.
 
   Random quantities with event probabilities
   given by \eqref{eq:normal_ex} are called \textit{normally distributed}.
@@ -236,7 +245,7 @@ either with theoretical derivations or with empirical evidence.
 
 \section{Rules of probability}
 
-Probabilities must satisfiy
+Probabilities must satisfy
 
 \fbox{\begin{minipage}{\textwidth}
 \begin{itemize}
@@ -275,24 +284,24 @@ Next, we extend the inclusion-exclusion principle to derive Boole's inequality.
 
 
 \begin{example}[Bonferroni's correction]
-This simple inequality \eqref{eq:booles} is useful in multiple testing.
+This simple inequality \eqref{eq:booles} is useful in multiple testing situations.
 Suppose we are running $n$ trials (say to test the effect of $n$ different drugs),
-and for each trial we set up an $\alpha$-level
+and for each trial we set up a level-$\alpha$
 hypothesis test.
 Let $B_i$ be the event that we reject the $i$-th hypothesis.
 If our test is correctly set-up, then we must have $\P(B_i) = \alpha$ for all $i$,
-where the probabiilty $\P$ is computed under the assumptions of the null hypothesis.
+where the probability $\P$ is computed under the assumptions of the null hypothesis.
 
 Notice however, that in general, we must have $\P(\cup_i B_i) \geq \alpha$,
 so the probability that we make at least one false rejection is greater than $\alpha$.
 
-To control the probability of making even one false rejection then, we can design
-a test such that the probability of rejection for each test is less than $\alpha / n$ --
-that is, $\P(B_i) \leq \alpha / n$ for all $i$. In this case,
+To control the probability of making even one false rejection then, we design
+a test such that the probability of rejection for each test is instead $\alpha / n$ --
+that is, $\P(B_i) = \alpha / n$ for all $i$. In this case,
 Boole's inequality shows that
 \begin{align*}
   \P(\cup_{i=1}^n B_i) \leq \sum_{i=1}^{n} \P(\cup_{i = 1}^n B_i)
-  \leq \alpha.
+  = \alpha.
 \end{align*}
 
 This correction of $\alpha$ values by dividing by $n$ is known as \textit{Bonferroni's correction}.
@@ -341,14 +350,14 @@ For independent events, \eqref{eq:multiplication} becomes
 
 \begin{exercise}[Sequential vs parallel components]
 A system consists of two components $C_1$ and $C_2$. Suppose the failure probability
-of $C_1$ is 0.9, while the failure probability of $C_2$ is 0.8.
+of $C_1$ is 0.05, while the failure probability of $C_2$ is 0.02.
 The failure events are independent.
 \begin{enumerate}[label = (\alph*)]
   \item Suppose the system is connected in series, so if one of the two component
-  fails, the entire system fails. What is the probability that the system fails?
+  fails, the entire system fails. What is the probability that the system works?
   \item Suppose the system is connected in parallel, so as long as one of the
-  component does not fail, the system does not fail. What is the probability that
-  the system fails?
+  component works, the system works. What is the probability that
+  the system works?
 \end{enumerate}
 
 
@@ -356,14 +365,14 @@ The failure events are independent.
 
 \begin{exercise}[Conditional probabilities]
 Suppose there is a 40\% chance of raining Monday. If it rains Monday,
-then the probability that it rains Tuesday is 60\%. But if
+then the probability that it rains Tuesday is 75\%. But if
 it does not Monday, then the probability that it rains on Tuesday
-falls to 5\%. Calculate the following probabilities that on Monday and Tuesday,
+falls to 15\%. Calculate the following probabilities that on Monday and Tuesday,
 
 \begin{enumerate}[label = (\alph*)]
   \item It rains at least once.
   \item It rains exactly once.
-  \item It rains on the second day.
+  \item It rains on Tuesday.
 \end{enumerate}
 \label{ex:raining}
 \end{exercise}
@@ -377,7 +386,7 @@ IN CLASS draw tree diagram. Using the above tree diagram, we can derive
 \label{eq:avg_cond_probs}
 \end{align}
 where $B_1, ..., B_n$ is a \textit{partition} of $\Omega$, meaning
-that the $B_i$ are dijoint and that $\cup_i B_i = \Omega$.
+that the $B_i$ are disjoint and that $\cup_i B_i = \Omega$.
 
 \end{minipage}}
 
@@ -397,7 +406,7 @@ and then pick a student at random from the senior class in that school. Find the
 
 \section{Bayes rule}
 
-We can combine the conditional probabiilty formula \eqref{eq:conditional_prob} and
+We can combine the conditional probability formula \eqref{eq:conditional_prob} and
 the rule of average conditional probabilities \eqref{eq:avg_cond_probs} to arrive
 at {\bf Bayes rule}:
 
@@ -410,17 +419,17 @@ For a partition of all possible outcomes $B_1, ..., B_n$,
 
 \end{minipage}}
 
-\begin{exercise}[Conditial probabilities continued]
+\begin{exercise}[Conditional probabilities continued]
   Return to the conditional probabilities in Exercise~\ref{ex:raining}.
   Suppose I was out of town Monday, so I don't know if it rained then. I come back
   on Tuesday, and saw that it rained. Apply Bayes rule to compute the probability
   that it rained Monday.
   \footnote{To a frequentist, this question would be nonsensical: Monday has already
-  occured, so either it rained or it did not rain; there is no sense in assigning a
+  occurred, so either it rained or it did not rain; there is no sense in assigning a
   probability to this event.
   In the mind of a Bayesian however, the event ``it rained on Monday"
-  is unobserved -- and thereore random. The probability assigned to this event
-  quantifies the uncertainty in the occurance of the unobserved event.
+  is unobserved -- and therefore random. The probability assigned to this event
+  quantifies the uncertainty in the occurrence of the unobserved event.
   The Bayesian will continue to view this event as random
   until more information is collected, for example, by asking a friend
   who was in town whether or not it rained on Monday.  }
@@ -435,7 +444,7 @@ For a partition of all possible outcomes $B_1, ..., B_n$,
   are identical, while two-thirds are fraternal.
   For identical twins, the siblings must be of the same sex; for fraternal births,
   the siblings have a 50/50 chance of being either same sex or opposite sex.
-  Apply Bayes rule to compute probabiilty that the mother's twins will be fraternal.
+  Apply Bayes rule to compute probability that the mother's twins will be fraternal.
 \end{exercise}
 
 \begin{exercise}[Medical diagnosis]
@@ -443,7 +452,7 @@ For a partition of all possible outcomes $B_1, ..., B_n$,
   \textit{specificity} of 90\%. Here,
   \begin{itemize}
     \item \textbf{sensitivity} is the probability that a test returns a positive result if the
-individual does not have the disease.
+individual has the disease.
     \item \textbf{specificity} is the probability that a test returns a negative result if the
 individual does not have the disease.
   \end{itemize}
@@ -459,14 +468,15 @@ individual does not have the disease.
     smokers are more likely than the general public to have this cancer.
     In fact, about 20\% of smokers develop this cancer. My doctor is well-trained in
     probability, and she knows that I smoke.
-    She uses Bayes rule to compute the probabiilty that I have cancer. What is
+    She uses Bayes rule to compute the probability that I have cancer. What is
     this probability?
     \item I go visit a geneticist who sequences my genome.
     He tells me that among people with similar genetic characteristics as mine,
     about 5\% of people develop this cancer.
-    The geneticist then uses Bayes rule to compute the probabiilty that
+    The geneticist then uses Bayes rule to compute the probability that
     I have cancer. What is this probability?
   \end{enumerate}
+  \label{ex:diagnostic}
 \end{exercise}
 
 Bayes rule is a mathematical formula for turning observed data into
@@ -476,7 +486,7 @@ The unknown quantity that I would like to know is whether or not I have cancer.
 In story of the mother with twins, the observed data is that her
 twins are both boys. The unknown quantity is whether the twins are identical or fraternal.
 
-Crucially, the inferences made using Bayes rule depend on specifying a \textit{prior probabiilty},
+Crucially, the inferences made using Bayes rule depend on specifying a \textit{prior probability},
 that is, the background probability of the unknown event before seeing any data.
 In the twin example, the doctor can go into a hospital database of all births in the United States,
 and see what fraction of twins were fraternal, and what fraction were identical.
@@ -488,5 +498,50 @@ or my geneticist? The resulting conclusion about my cancer diagnosis
 depends what assumptions we make; and the assumptions we make depend
 on the available knowledge at hand.
 
+More fundamentally, how can we interpret the
+probability, given that it changes based on the
+information at hand or based on expert opinion?
+The answer depends on how we define the \textit{population
+of interest}.\footnote{
+Defining the population is the
+first step in applied statistical analysis,
+argues Bin Yu in
+\url{https://www.stat.berkeley.edu/~binyu/ps/papers2018/AI+Stat18.pdf}
+}
+Let us take scenario (c) in Exercise~\ref{ex:diagnostic}.
+Here, the implicit theoretical population is the set of
+individuals with similar genetic information as me.
+Suppose I sample 1000 individuals from this theoretical
+population, and test each individual.
+Then each individual would fall in one of four categories:
+(test positive, diseased); (test positive, not diseased);
+(test negative, diseased); (test negative, not diseased).
+Based on the probability model described in
+Exercise~\ref{ex:diagnostic}, the counts
+of individuals falling in each catagories would be
+approximately
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{l|cc|c}
+    & Test positive & Test negative & Total \\\hline
+  Diseased & 49 & 1 & 50 \\
+  Not diseased & 95 & 855 & 950\\ \hline
+  Total & 144 & 856 & 1000
+  \end{tabular}
+\end{table}.
+
+If I am a member of this sample of 1000 individuals
+from the theoretical population, and I know that
+I test positive, then this places me in the first
+column of the table above.
+Examining the first column of the table, I see
+that $49 / 144$ of these positive individuals
+have the disease. I conclude then,
+that I have a $49 / 144 = .34$ myself
+of having this disease.
+
+This demonstrates the frequency interpretation of
+the conditoinal probability: if I sample from
+a larger population, then res
 
 \end{document}

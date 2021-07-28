@@ -225,9 +225,10 @@ Here are a few more examples of named distributions.
 \begin{example}(Poisson)
 A random variable $X$ which takes values on the non-negative integers is
 \textit{Poisson distributed} with parameter $\lambda$ if
-\begin{align*}
+\begin{align}
   \P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}.
-\end{align*}
+  \label{eq:poisson}
+\end{align}
 
 The Poisson distribution is often used to model the number of occurences
 of a certain event in a window of time. We will see its appearance in the next session.
@@ -289,13 +290,17 @@ and will write $X\sim F$, read as ``$X$ follows distribution $F$", or ``$X$ is s
 
 For a \textit{discrete} random variable $X$, the distribution of $X$ is specified
 by the probabilities $\P(X = x)$, for all values $x$ in the range of $X$
-can take. The sum of two dice rolls, Binomial random variables, and Poisson random variables
-are discrete.
+can take.
+The function $f(x) := \P(X = x)$ is called the \textit{probability mass function}, or \textit{p.m.f}.
+The sum of two dice rolls, Binomial random variables, and Poisson random variables
+are discrete, with probability mass functions displayed in
+Table~\ref{tab:distr_s}, Equation~\eqref{eq:binom_distr},
+and Equation~\eqref{eq:poisson}, respectively.
 
 For a \textit{continuous} random variable $X$, such as exponential or normal random variables,
 the probability that $\P(X = x) = 0$. Instead, probabilities were defined on sets
 using integrals (\ref{eq:exponential},\ref{eq:normal}).
-The integrand is called a \textit{probability density function} (or simply a ``density"). Loosely,
+The integrand is called a \textit{probability density function} (or simply a ``density", or also abbreviated p.m.f). Loosely,
 we can interpret a density $f(x)$ as specifying the probability that $X$ lies
 an infintessimal interval around $x$, that is
 \begin{align*}
