@@ -116,7 +116,11 @@
 \newcommand{\indi}{\mathds{1}}
 
 \begin{document}
-\lecture{2}{Random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{2}
+\lecture{2}{Random variables and distributions}{Bryan Liu}{runjing\_liu@berkeley.edu}{2}
+
+{\bf Supplemental reading: } Pitman \textit{Probability},  Chapters 2.1, 3.1, 3.2.
+
+\section{Random variables}
 
 A random variable $X$ is a variable
 that represents a randomly produced number.
@@ -170,22 +174,22 @@ that opened the previous session for concreteness.
 \begin{example}(Stock prices)
   \label{ex:log_stocks}
   Let $\Delta \log S$ be the change in log price of a stock after one unit time.
-  The probability that the change lands between two numbers $l$ and $u$ is modeled
+  The probability that the change lands between two numbers $a$ and $b$ is modeled
   as
   \begin{align}
-    \P(\Delta \log S \in [l, u]) = \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+    \P(\Delta \log S \in [a, b]) = \int_a^b \frac{1}{\sqrt{2\pi\sigma^2}}
     \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
     \label{eq:normal_ex}
   \end{align}
   where, $\mu$ is the \textit{exponential growth rate of the stock}
-  and $\sigma^2$ is the \textit{volitility} of the stock.
+  and $\sigma^2$ is the \textit{volatility} of the stock.
 \qed
 \end{example}
 
 In comparing these examples with the motivating
 examples from yesterday, you should see that
 we have not really defined anything new.
-Yesterday, we introducted the notion of \textit{events}
+Yesterday, we introduced the notion of \textit{events}
 in an outcome space; here, random variables
 determine events.
 Every event can be expressed as $X\in B$ for some subset $B$, where
@@ -200,13 +204,13 @@ explicitly showing where the randomness is coming from
 
 In the above examples, each random variable was assigned probabilities for
 the values it could take on. These probabilities are called the
-\textit{the distribution} of the random variable.
+\textit{distribution} of the random variable.
 
 Often these distributions have a name. The next exercise constructs our
 first named distribution, the \textit{Binomial distribution}:
 
 \begin{exercise}[The binomial distribution]
-Consider a coin which comes up heads with probabiilty $p$.
+Consider a coin which comes up heads with probability $p$.
 Consider flipping this coin $n$ times. Let $X$ be the number of
 heads in the $n$ trials. Show that
 \begin{align}
@@ -216,7 +220,7 @@ heads in the $n$ trials. Show that
 
 \end{exercise}
 
-When a random variable $X$ has assignemnt probabilities given by \eqref{eq:binom_distr},
+When a random variable $X$ has assignment probabilities given by \eqref{eq:binom_distr},
 we say that $X$ has a Binomial distribution with parameters $(n, p)$. The two constants
 $n$ and $p$ specify this distribution.
 
@@ -230,7 +234,7 @@ A random variable $X$ which takes values on the non-negative integers is
   \label{eq:poisson}
 \end{align}
 
-The Poisson distribution is often used to model the number of occurences
+The Poisson distribution is often used to model the number of occurrences
 of a certain event in a window of time. We will see its appearance in the next session.
 \qed
 \end{example}
@@ -239,28 +243,28 @@ of a certain event in a window of time. We will see its appearance in the next s
 A random variable $X$ which takes values on the positive real line is
 \textit{exponentially} distributed with parameter $\lambda$ if
 \begin{align}
-  \P(X \in [l, u]) =
-  \int_{t}^u \lambda \exp^{-\lambda s} \;ds
+  \P(X \in [a, b]) =
+  \int_a^b \lambda \exp^{-\lambda s} \;ds
   \label{eq:exponential}
 \end{align}
-for all real numbers $0 \leq l \leq u$.
+for all real numbers $0 \leq a \leq b$.
 
 The time until radioactive decay in Example~\ref{ex:particle_decay}
 followed an exponential distribution.
 \qed
 \end{example}
 
-\begin{example}(Guassian)
+\begin{example}(Gaussian)
 A random variable $X$ which takes values on the real line follows a
 \textit{Gaussian} or \textit{normal} distribution with mean $\mu$ and variance
 $\sigma^2$ if
 \begin{align}
-  \P(X \in [l, u]) =
-  \int_{l}^u \frac{1}{\sqrt{2\pi\sigma^2}}
+  \P(X \in [a, b]) =
+  \int_a^b \frac{1}{\sqrt{2\pi\sigma^2}}
   \exp^{-\frac{1}{2\sigma^2}(x - \mu)^2} \; dx
   \label{eq:normal}
 \end{align}
-for all real numbers $\leq l \leq u$.
+for all real numbers $a \leq b$.
 
 Many natural phenomenon such as the distribution of human heights, IQ scores, and
 measurement error in physical experiments are well-approximated by the familiar
@@ -289,8 +293,7 @@ and will write $X\sim F$, read as ``$X$ follows distribution $F$", or ``$X$ is s
 \subsubsection*{Discrete vs continuous random variables}
 
 For a \textit{discrete} random variable $X$, the distribution of $X$ is specified
-by the probabilities $\P(X = x)$, for all values $x$ in the range of $X$
-can take.
+by the probabilities $\P(X = x)$, for all values $x$ in the range of $X$.
 The function $f(x) := \P(X = x)$ is called the \textit{probability mass function}, or \textit{p.m.f}.
 The sum of two dice rolls, Binomial random variables, and Poisson random variables
 are discrete, with probability mass functions displayed in
@@ -298,16 +301,16 @@ Table~\ref{tab:distr_s}, Equation~\eqref{eq:binom_distr},
 and Equation~\eqref{eq:poisson}, respectively.
 
 For a \textit{continuous} random variable $X$, such as exponential or normal random variables,
-the probability that $\P(X = x) = 0$. Instead, probabilities were defined on sets
+the probability $\P(X = x) = 0$ for any scalar $x$.  Instead, probabilities were defined on sets
 using integrals (\ref{eq:exponential},\ref{eq:normal}).
-The integrand is called a \textit{probability density function} (or simply a ``density", or also abbreviated p.m.f). Loosely,
+The integrand is called a \textit{probability density function} (or simply a ``density", or abbreviated \textit{p.m.f}). Loosely,
 we can interpret a density $f(x)$ as specifying the probability that $X$ lies
-an infintessimal interval around $x$, that is
+an infinitesimal interval around $x$, that is
 \begin{align*}
   \P(X \in dx) = f(x)\;dx.
 \end{align*}
 
-For generic sets $[a, b]$ in $\R$, we sum the infintessimal probabilities
+For generic sets $[a, b]$ in $\R$, we sum the infinitesimal probabilities
 to obtain
 \begin{align*}
   \P(X\in[a, b]) = \int_a^b f(x)\;dx
@@ -323,7 +326,7 @@ These definitions are similarly defined in the context of random variables.
   \item {\bf Conditional distributions: }\footnote{
   We will come back to this formula specifically for continuous random variables ...
   in particular we need to be careful if we want to condition on the event $Y = y$,
-  which has probabiilty 0 if $Y$ is continuous.
+  which has probability 0 if $Y$ is continuous.
   }
   Let $X$ and $Y$ be two random variables. Suppose we know that $Y\in B$, $B$
   being a subset of the range of $Y$. Then the
@@ -374,7 +377,7 @@ and their distributions.
 We start with
 
 \fbox{\begin{minipage}{\textwidth}
-The \textit{expectation} (or \textit{expected value}) of a random variable $X$, denoted
+The \textbf{expectation} (or \textbf{expected value}) of a random variable $X$, denoted
 $\E(X)$, is defined as
 \begin{align*}
 \E(X) = \sum_{x} x \P(X = x)
@@ -383,25 +386,12 @@ if $X$ is a discrete random variable.
 
 If $X$ is a continuous random variable with probability density function $f$, then
 \begin{align*}
-  \E(X) = \int_{-\infty}^\infty x f(x)\; dx
+  \E(X) = \int_{-\infty}^\infty x f(x)\; dx.
 \end{align*}
 
 \end{minipage}}
 
-\begin{exercise}[]
-  $\;$\vspace{-1em}
-
-  \begin{enumerate}[label = (\alph*)]
-    \item Let $S$ be the sum of two dice rolls (see Example~\ref{ex:dice}). Compute
-    the expectation of $S$.
-    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
-    $X$ has expectation $\lambda$.
-    \item Confirm that if $X$ is normally distributed with parameters $(\mu, \sigma^2)$,
-    then the expectation of $X$ is $\mu$.
-  \end{enumerate}
-\end{exercise}
-
-Next, we record some properties of expectations:
+We record some properties of expectations:
 \begin{itemize}
   \item {\bf Linearity: } For scalars $a, b\in R$,
   \begin{align*}
@@ -417,8 +407,27 @@ Next, we record some properties of expectations:
     \E(XY) = \E(X)\E(Y).
   \end{align*}
 \end{itemize}
-Notice that we do not require independence for addition, but we do require
+
+Notice that we do not require independence for addition,
+but we do require
 independence for multiplication.
+
+
+\begin{exercise}[]
+  $\;$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Let $S$ be the sum of two dice rolls (see Example~\ref{ex:dice}). Compute
+    the expectation of $S$.
+    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
+    $X$ has expectation $\lambda$.
+    \item Show that if $X$ is exponentially distributed with parameter $\lambda$,
+    then the expectation of $X$ is $1/\lambda$.
+    \item Confirm that if $X$ is normally distributed with parameters $(\mu, \sigma^2)$,
+    then the expectation of $X$ is $\mu$
+    (assume all integrals converge).
+  \end{enumerate}
+\end{exercise}
 
 \begin{exercise}[]
   Let $S_n$ be the sum of numbers obtained from $n$ dice. Find $\E(S_n)$.
@@ -442,30 +451,13 @@ We use the definition of an expectation to broaden our scope of distributional s
 Next, we consider the \textit{variance} of a random variable.
 
 \fbox{\begin{minipage}{\textwidth}
-Let $\mu = \E(X)$. The \textit{variance} of a random variable $X$, abbreviated
+Let $\mu = \E(X)$. The \textbf{variance} of a random variable $X$, abbreviated
 $\V(X)$, is defined as the expected squared deviation of $X$ from $\mu$,
 \begin{align*}
 \V(X) = \E\Big((X - \mu)^2\Big).
 \end{align*}
 
 \end{minipage}}
-
-\begin{exercise}[Alternative formula for variance]
-  Show that $\V(X) = \E(X^2) - \E(X)^2$.
-\end{exercise}
-
-\begin{exercise}[]
-  $\;$\vspace{-1em}
-
-  \begin{enumerate}[label = (\alph*)]
-    \item Let $X$ be the number returned by a single dice roll. Compute
-    the variance of $X$.
-    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
-    $\V(X)=\lambda$.
-    \item Confirm that if $X$ is normally distributed with parameters $(\mu, \sigma^2)$,
-    then $\V(X)=\sigma^2$.
-  \end{enumerate}
-\end{exercise}
 
 Next, we now record some properties of variances:
 \begin{itemize}
@@ -479,6 +471,24 @@ Next, we now record some properties of variances:
     \V(X + Y) = \V(X) + \V(Y).
   \end{align*}
 \end{itemize}
+
+\begin{exercise}[Alternative formula for variance]
+  Show that $\V(X) = \E(X^2) - \E(X)^2$.
+\end{exercise}
+
+\begin{exercise}[]
+  $\;$\vspace{-1em}
+
+  \begin{enumerate}[label = (\alph*)]
+    \item Let $X$ be the number returned by a single dice roll. Compute
+    the variance of $X$.
+    \item Show that if $X$ is Poisson distributed with parameter $\lambda$, then
+    $\V(X)=\lambda$.
+    \item Show that if $X$ is exponentially distributed with parameter $\lambda$, then
+    $\V(X)=1/\lambda^2$.
+  \end{enumerate}
+\end{exercise}
+
 
 \begin{exercise}[iid random variables]
   Suppose $X_1,..., X_n$ are random variables drawn independently from a
@@ -498,14 +508,14 @@ Next, we now record some properties of variances:
 \begin{exercise}[Chebychev's inequality]
   Use Markov's inequality \eqref{eq:markov} to show that
   \begin{align*}
-    \P(|X - \E(X)| \geq a) \leq \frac{\V(X)}{a}.
+    \P(|X - \E(X)| \geq a) \leq \frac{\V(X)}{a^2}.
   \end{align*}
 \end{exercise}
 
 Chebychev's inequality puts an upper bound on the \textit{tail probability},
 the probability that a random variable $X$ is far from its mean.
 
-Tail probabilities are of particular interest in hypotheis testing.
+Tail probabilities are of particular interest in hypothesis testing.
 Here, the random variable $X$ would represent a test statistic;
 if the the deviation of the observed statistic from its mean occurs with small probability under
 the null hypothesis,
@@ -516,15 +526,16 @@ This inequality is useful because it does not depend on distributional assumptio
 
 \begin{exercise}[Empirical distribution]
 Suppose I have collected $n$ data points $x_1, ..., x_n$.
-The \textit{empirical distrbution}
+The \textit{empirical distribution}
 is defined as
-\begin{align*}
+\begin{align}
   \P(X = x) = \frac{\#\{x_i = x\}}{n}.
-\end{align*}
+  \label{eq:empirical}
+\end{align}
 
 Show that if $X$ is drawn from the empirical distribution, then
 \begin{enumerate}[label = (\alph*)]
-  \item $\E(X) = \frac{1}{n}\sum_{i=1}^n x_i$, the mean of the $n$-data points.
+  \item What is $\E(X)$ in terms of $x_1, ..., x_n$?
   \item What is $\V(X)$?
 \end{enumerate}
 \label{exer:empirical}
@@ -533,12 +544,13 @@ Show that if $X$ is drawn from the empirical distribution, then
 In statistics, we usually view the data points $x_1, ..., x_n$ as coming from some
 data generating process which is unknown to us. Let $F$ represent the unknown, true
 data generating distribution. We want to know things about $F$, for example its mean
-and variance. Ideally, we would like to compute $\E(X)$ and $\V(X)$ under the assumption
-that $X$ has distribution $F$. But, $F$ is unknown. So what do statisticians do?
+and variance.
+But, $F$ is unknown. So what do statisticians do?
 
 The \textit{plug-in principle} says that we can try to replace the unknown
 distribution $F$ with the empirical distribution $\hat F$ -- ``empirical" because
-$\hat F$ is constructed from observed data -- and then compute quantities of interest,
+$\hat F$ is constructed from observed data using
+\eqref{eq:empirical} -- and then compute quantities of interest,
 such as the mean and variance,
 using $\hat F$ in place of $F$.
 Theory\footnote{specifically, the Glivenko–Cantelli theorem}
@@ -581,11 +593,11 @@ The goal is to choose $b$ to minimize the expected loss, or \textit{risk}, defin
   a random quantity with
   distribution $F$.
   I buy newspapers at $C$-dollars per paper, and sell to customers for a price $P > C$.
-  Overstocking results in wasted inventory, while understocking results in lost sales.
+  Overstocking results in wasted inventory, while under-stocking results in lost sales.
   By choosing to stock $b$ items, my profit when $x$ items
   are sold is
   \begin{align}
-    \textrm{Profit}(x, b) = P\min(b, x) - Cx.
+    \textrm{Profit}(x, b) = P\min(b, x) - Cb.
   \end{align}
   Define the loss to be $L(x, b) = - \textrm{Profit}(x, b)$, so that
   minimizing $L$ is equivalent to maximizing profit.
@@ -608,7 +620,7 @@ In the case of squared error loss, we saw that the optimal predictor is the
 expectation of $F$.
 The optimal predictor is unknown if $X$ comes from an unknown distribution $F$.
 The plug in principle says that we could try to replace $F$ with $\hat F$,
-the empirical distribuion.
+the empirical distribution.
 The resulting predictor is the expectation of $\hat F$, which by
 Exercise~\ref{exer:empirical} we showed is the equal to the sample mean.
 
