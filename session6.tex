@@ -271,21 +271,65 @@ We can normalize the covariance as follows:
 
 For random variables $X$ and $Y$, their \textbf{correlation}
 is defined as
-\begin{align*}
+\begin{align}
   \corr(X, Y) = \frac{\cov(X,Y)}{\sqrt{\var(X), \var(Y)}}.
-\end{align*}
+  \label{eq:corr}
+\end{align}
 \end{minipage}}.
 
 \begin{exercise}
   Show that $\corr(X,Y)$ is always between -1 and 1.
 \end{exercise}
 
-Correlation measures
+\begin{exercise}[Empirical correlations]
+  Suppose we observe data pairs $(x_1, y_1), ...,
+  (x_n, y_n)$. Use the plug-in principle, plugging in the
+  empirical distribution for the correlation formula
+  \eqref{eq:corr}, to give a
+  formula for the sample correlation.
+  \label{ex:sample_corr}
+\end{exercise}
 
-TODO wiki figure
+When two random variables $X$ and $Y$ have zero correlation
+(or equivalently, zero covariance),
+we say that the random variables are
+\textit{uncorrelated}.
 
-TODO corr does not imply indep
+\begin{exercise}[Independence implies uncorrelated]
+Show that if random variables $X$ and $Y$ are independence,
+then $X$ and $Y$ are uncorrelated.
+\label{ex:indep_corr}
+\end{exercise}
 
+\begin{exercise}[Uncorrelated does not imply independence]
+  Let $X$ take values $\{-1, 0, 1\}$ with equal probability.
+  Let $Y = X^2$.
+  Argue that $X$ and $Y$ are not independent but
+  have $\cov(X, Y) = 0$. .
+\end{exercise}
+
+More generally, the correlation (or covariance) measures
+the \textit{linear} relationship between two random
+variables.
+Two variables may have some other, nonlinear
+relationship, and using the covariance
+as a metric to measure their dependence
+may not be appropriate.
+See Figure~\ref{fig:wiki_corr} for an illustration.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width = 0.8\textwidth]{./figures/wiki_corr_example.png}
+  \caption{Plotted are scatter points of
+  $(x,y)$ pairs, with their empirical correlations
+  (Exercise~\ref{ex:sample_corr}). Correlation measures the linear relationship
+  between two random variables; however, zero correlation
+  does not rule out other, nonlinear relationships.
+  Figure taken from \url{https://en.wikipedia.org/wiki/Correlation}.}
+  \label{fig:wiki_corr}
+\end{figure}
+
+TODO exercise. best linear predictor. 
 
 
 \end{document}
