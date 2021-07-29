@@ -116,7 +116,9 @@
 
 \newcommand{\xmin}{X_{\text{min}}}
 \newcommand{\xmax}{X_{\text{max}}}
-
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\corr}{\text{Corr}}
+\newcommand{\var}{\text{Var}}
 
 \begin{document}
 \lecture{6}{Dependence between random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{6}
@@ -206,12 +208,12 @@ Show that
 \end{align*}
 \end{exercise}
 
-\begin{exercise}[Conditional variance]
-
-  can't decide if i want to include this (6.2.18).
-
-\end{exercise}
-
+% \begin{exercise}[Conditional variance]
+%
+%   can't decide if i want to include this (6.2.18).
+%
+% \end{exercise}
+%
 
 
 \begin{exercise}[Predictions]
@@ -234,5 +236,56 @@ Show that
   argue that the optimal $g$ is $g(x) = \E(Y | X = x)$.
 
 \end{exercise}
+
+\section{Covariance and correlation}
+
+Given two random variables $X$ and $Y$,
+their \textit{covariance} measures how these
+variables move together.
+
+\fbox{\begin{minipage}{\textwidth}
+
+For random variables $X$ and $Y$, their \textbf{covariance}
+is defined as
+\begin{align*}
+  \cov(X, Y) = \E((X - \mu_X)(Y - \mu_Y)),
+\end{align*}
+where $\mu_X = \E(X)$ and $\mu_Y = \E(Y)$.
+\end{minipage}}
+
+\begin{exercise}[Alternative formula for covariance]
+Show that we can compute the covariance as
+$\cov(X, Y) = \E(XY) - \E(X)\E(Y)$.
+\end{exercise}
+
+Generally, $\cov(X,Y)$ is positive if
+above-average values of $X$ tend to be associated
+above values of $Y$.
+$\cov(X,Y)$ is negative if above-average values tend to be
+associated with below-average values of $Y$, and vice-versa.
+
+The magnitude of the covariance may be hard to interpret.
+We can normalize the covariance as follows:
+
+\fbox{\begin{minipage}{\textwidth}
+
+For random variables $X$ and $Y$, their \textbf{correlation}
+is defined as
+\begin{align*}
+  \corr(X, Y) = \frac{\cov(X,Y)}{\sqrt{\var(X), \var(Y)}}.
+\end{align*}
+\end{minipage}}.
+
+\begin{exercise}
+  Show that $\corr(X,Y)$ is always between -1 and 1.
+\end{exercise}
+
+Correlation measures
+
+TODO wiki figure
+
+TODO corr does not imply indep
+
+
 
 \end{document}
