@@ -123,7 +123,7 @@ In a simplistic model of the world,
 let the observed datapoints be denoted $X_1, ..., X_n$,
 and we view the data as coming from random draws
 of a distribution $F$.
-If each data point is drawn
+In addition, if each data point is drawn
 independently from all others, then we
 say $X_1, ..., X_n$ are drawn \textit{i.i.d.} from $F$;
 here, ``i.i.d." stands for \textit{independently and identically distributed}. Compactly, we write
@@ -447,24 +447,74 @@ The last assumption says that \textit{arrivals must be independent} -- this assu
 for example, customers tend to arrive in pairs or groups.
 
 This does not mean that the Poisson distribution is useless as a model for the world.
-Often, these simple distributions form the building blocks for more complex models. We start with simple models,
+Often, these simple distributions form the building blocks for more complex models. We start with simple model
 and iteratively refine them, either by incorporating
-domain expertise or through data driven algorithms.
+domain expertise or by employing data driven algorithms.
 All model building exercises depend on careful analysis of the assumptions --
 and these assumptions may be rejected based on either
 domain knowledge or observed data.
+
+\subsection{Arrival times}
 
 \begin{exercise}[Arrival times]
 Often, we are also interested not only in the number of arrivals,
 but also when these arrivals occur.
 Show that if the number of arrivals in $t$-units of time
 follows a Poisson distribution with mean $\lambda t$,
-then the \textit{time} of the first arrival follows an exponential distribution with rate $\lambda$.
+then the \textit{time} of the first arrival
+has an exponential distribution with rate $\lambda$.
+
 \end{exercise}
 
-\section{Proofs}
 
-Time permitting, prove the Normal and Poisson approximations
-to the binomial ...
+In fact, if we further assume that the number of arrivals in
+disjoint time intervals are independent, then
+we arrive at a \textit{Poisson process},
+in which case the time between any two arrivals will be exponentially distributed.
+
+
+\fbox{\begin{minipage}{\textwidth}
+\textbf{Two descriptions of Poisson arrivals}.
+The following describe equivalent processes:
+
+\begin{enumerate}[label = (\Roman*)]
+  \item The \textit{number of arrivals} in an interval time of length $t$ is
+  $\text{Poisson}(\lambda t)$, and the number of arrivals in disjoint
+  time intervals are independent.
+
+  \item The \textit{time between arrivals}
+  are independent and distributed as $\text{Exponential}(\lambda)$.
+\end{enumerate}
+
+\end{minipage}}
+
+\begin{exercise}[Arrivals at a coffee shop]
+Suppose customers arrive at a coffee shop at an average, time-invariant
+rate of 12 customers per hour according to a Poisson arrival process.
+%
+% Let $N(t_1, t_2)$ be the random variable representing the number of arriving customers
+% between times $t_1$ and $t_2$.
+% Fro concreteness, let $t = 0$ refer to 8am, while $t > 0$ refers to
+% the number of hours elapsed after 8am.
+%
+% Let $W_1$ be the time of the first arrival after 8am, and let
+% $W_i$ for $i > 1$ be the time between subsequent arrivals.
+%
+Compute
+
+\begin{enumerate}[label = (\alph*)]
+  \item The probability that no one arrives between 8am and 8:30am.
+  \item The probaiblity that no one arrives between 8 and 8:30am,
+  and at most four people arrive between 8:30 and 9am.
+  \item The probability that the fourth customer arrives within 10 minutes
+  of the third customer.
+  \item The probability that the first arrival takes less than 10 minutes
+  while the time between the second and third arrival is more than 30 minutes.
+  \item The probability that the 10th customer takes more than an hour to arrive.
+\end{enumerate}
+
+\end{exercise}
+
+
 
 \end{document}

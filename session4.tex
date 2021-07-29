@@ -118,57 +118,17 @@
 \begin{document}
 \lecture{4}{Continuous random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{4}
 
-\section{Poisson arrivals}
 
-Recall from last session we discussed the following equivalence (and proved
-one direction of the equivalence as an exercise):
+\section{Exponential distributions}
+Last session, we saw a close relationship between
+Poisson arrival counts
+and exponential waiting times.
 
-\fbox{\begin{minipage}{\textwidth}
-\textbf{Two descriptions of Poisson arrivals}
-
-\begin{enumerate}[label = (\Roman*)]
-  \item The \textit{number of arrivals} in an interval time of length $t$ is
-  $\text{Poisson}(\lambda t)$, and the number of arrivals in disjoint
-  time intervals are independent.
-
-  \item The \textit{time between arrivals}
-  are independent and distributed as $\text{Exponential}(\lambda)$.
-\end{enumerate}
-
-\end{minipage}}
-
-\begin{exercise}[Arrivals at a coffee shop]
-Suppose customers arrive at a coffee shop at an average, time-invariant
-rate of 12 customers per hour according to a Poisson arrival process.
-%
-% Let $N(t_1, t_2)$ be the random variable representing the number of arriving customers
-% between times $t_1$ and $t_2$.
-% Fro concreteness, let $t = 0$ refer to 8am, while $t > 0$ refers to
-% the number of hours elapsed after 8am.
-%
-% Let $W_1$ be the time of the first arrival after 8am, and let
-% $W_i$ for $i > 1$ be the time between subsequent arrivals.
-%
-Compute
-
-\begin{enumerate}[label = (\alph*)]
-  \item The probability that no one arrives between 8am and 8:30am.
-  \item The probability that first customer arrives before 8:30am.
-  \item The probaiblity that no one arrives between 8 and 8:30am,
-  and at most four people arrive between 8:30 and 9am.
-  \item The probability that the fourth customer arrives within 10 minutes
-  of the third customer.
-  \item The probability that the first arrival takes less than 10 minutes
-  while the time between the second and third arrival is more than 30 minutes.
-  \item The probability that the 10th customer takes more than an hour to arrive.
-\end{enumerate}
-
-\end{exercise}
-
-\section{More on exponential distributions}
-The exponential distribution if often used
+This ``waiting" time interpretation is often used
 in engineering applications to model the time-to-failure of some
-component. We record a key property of the exponential distribution:
+component.
+
+We record a key property of the exponential distribution:
 \begin{exercise}[The memoryless property]
 Show that if the random variable $T$ is exponential, then
 \begin{align*}
