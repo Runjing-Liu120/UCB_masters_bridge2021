@@ -118,6 +118,8 @@
 \begin{document}
 \lecture{4}{Continuous random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{4}
 
+{\bf Supplemental reading}: Pitman, \textit{Probability} Chapter 4
+
 
 \section{Exponential distributions}
 Last session, we saw a close relationship between
@@ -139,27 +141,30 @@ Show that if the random variable $T$ is exponential, then
 
 The exercise above says that if the component survives until time $t$,
 then it is as good as new --
-given that the component survived until time $t$,
-the chance that it survives another $s$ units of time after time $t$ is equal to
+after component survives to time $t$,
+the chance that it survives another $s$ units of time is equal to
 the chance that it survives to $s$ in the first place.
 
 This is a good model for radioactive decay, and for some kinds of electrical
-components that do not wear out, but rather just fail at unpredictible times.
-On the other hand, this model would \textit{not} be a good model for human lifetimes.
+components that do not wear out, but rather just fail suddenly at unpredictable times.
+On the other hand, the memoryless property
+suggests that the exponential distribution would \textit{not} be
+a good model for systems that are vulnerable to wear and tear --
+such as human lifetimes.
 To construct more complex functions for survival times, we need
 a discussion of the meaning of the rate $\lambda$.
 
 \subsection{Hazard rates and survival functions}
 
 We think of $\lambda$ as the instantaneous \textit{hazard rate} --
-that is, the probability of failure or death just after time $t$, given survival up to
+the probability of failure or death immediately after time $t$, given survival up to
 time $t$. In generality, we will let $\lambda$ depend on $t$,
 in which case we write $\lambda(t)$.
 
-In this intepretation,
+In this interpretation,
 \begin{align*}
 \lambda(t) dt  = \P(T\in dt | T > t) = \frac{\P(T \in dt)}{\P(T > t)} =
-\frac{f(t) \; dt}{G(t)},
+\frac{f(t) \, dt}{G(t)},
 \end{align*}
 where $f(t)$ is the probability density function of the random variable $T$,
 and $G(t)$ is the \textit{survival function}
@@ -177,7 +182,7 @@ Show that an exponential random variable has a constant hazard rate.
 \end{exercise}
 
 The assumption of a constant hazard rate is certainly not true
-for human lifetimes -- because humans age, and so
+for human lifetimes -- because humans age,
 we would expect $\lambda$ to be an increasing function of $t$.
 \footnote{In an even more detailed model, we might
 expect our hazard rate to \textit{decrease} from birth to our thirties,
@@ -185,7 +190,8 @@ before increasing again. }
 
 In many applications, engineering and medical, it is more
 convenient to model
-$\lambda(t)$, rather than directly construct probability density functions.
+$\lambda(t)$, rather than directly construct probability density functions
+on the random lifetimes.
 The next exercise shows their relationship.
 
 \begin{exercise}[Survival and hazards]
@@ -225,7 +231,7 @@ Show that
 For the remainder of this session, and all of next session,
 we go through some exercises in manipulating probability density functions.
 
-The simplist continuous random variable is the \textit{uniform random variable}
+The simplest continuous random variable is the \textit{uniform random variable},
 which has a constant density.
 
 \fbox{\begin{minipage}{\textwidth}
@@ -254,13 +260,13 @@ Let $X \sim \text{Uniform}(a, b)$. Compute $\E(X)$ and $\V(X)$.
 \fbox{\begin{minipage}{\textwidth}
 
 Let $X$ be a random variable with density $f_X(x)$ with range $(a, b)$.
-Let $Y = g(X)$ for a strictly monotone and differential function $g$.
+Let $Y = g(X)$ for a strictly monotone and differentiable function $g$.
 
 Then the range of $Y$ is an interval with endpoints $g(a)$ and $g(b)$.
 
-The density $f_Y(y)$ on this interval is
+Then the density of $Y$ on this interval is
 \begin{align*}
-  f_Y(y) = f_X(x) / |g'(x)|
+  f_Y(y) = f_X(x) / |g'(x)|.
 \end{align*}
 
 \end{minipage}}
@@ -282,9 +288,9 @@ Do you recognize this distribution?
 \subsection{Cumulative distribution functions}
 
 So far, we have primarily characterized continuous random
-variables with using their probability density function.
+variables using their probability density function.
 
-Another common way to define random variables is using
+Another common way to characterize random variables is by
 their \textit{cumulative distribution function} (also
 called the ``distribution function" or abbreviated \textit{c.d.f}), given by
 \begin{align}
@@ -349,7 +355,7 @@ Inverting $F$, the $p$-th quantile is given by
 We call $F^{-1}$ the inverse distribution function.
 
 \begin{exercise}
-  For the $\text{exponential}(\lambda)$ distribution,
+  For the $\text{Exponential}(\lambda)$ distribution,
   find a formula for the $p$-th quantile.
   \label{ex:exp_inv_cdf}
 \end{exercise}
@@ -362,9 +368,9 @@ In order to do so, first sample $U\sim\text{Uniform}(0, 1)$, and then compute $F
 
 \begin{exercise}(simulation of a random variable)
 Let $U\sim\text{Uniform}(0, 1)$.
-Lef $F$ be a valid c.d.f
+Let $F$ be a valid c.d.f
 (that is, a monotonically increasing function
-with values between 0, 1). Show that
+with values between 0 and 1). Show that
 the transformed random variable $X = g(U)$,
 with $g = F^{-1}$, has c.d.f. $F$.
 \end{exercise}

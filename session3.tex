@@ -118,6 +118,10 @@
 \begin{document}
 \lecture{3}{Convergence theorems}{Bryan Liu}{runjing\_liu@berkeley.edu}{3}
 
+{\bf Supplemental reading}: Pitman, \textit{Probability} Chapters 2, 3.3
+
+\section{The law of large numbers}
+
 We go out in the world and collect data.
 In a simplistic model of the world,
 let the observed datapoints be denoted $X_1, ..., X_n$,
@@ -242,7 +246,7 @@ who will vote Democratic.
 The true proportion $p$ is an unknown quantity
 that we would like to estimate. To form an estimate, we
 randomly subsample $n = 200$ individuals
-from the set of registered voters and ask
+from the set of all registered voters and ask
 about their voting preferences.
 Suppose that in the sample, $110$ out of the $200$
 individuals responded that they would vote
@@ -250,12 +254,12 @@ Democratic.
 Let us estimate $p$ with $\hat p = 110/200 = 0.55$.
 How good is the estimate $\hat p$?
 
-We will use the normal approximation to
+We use the normal approximation to
 construct a confidence interval using the following steps:
 \begin{enumerate}
   \item We model the number of Democratic respondents as
   $n\hat p \sim \text{Binomial}(n, p)$.
-  In our polling example, $n = 200$ and $p$ is unknown.
+  In our polling example, $n = 200$, $n\hat p = 110$, and $p$ is unknown.
   \item Using the normal approximation, we make the simplification that
   $n\hat p \sim \text{Normal}(np, np(1-p))$.
   \item By the shifting and scaling properties
@@ -297,7 +301,7 @@ $[0.51, 0.59]$.
 Discussion: why is the Binomial model in step 1 appropriate here? In what scenarios might it be inappropriate?
 
 \subsection{Central limit theorem}
-The Normal approximation is not unique to limited to distributions.
+The normal approximation is not limited to Binomial distributions.
 More generally, we have
 
 \fbox{\begin{minipage}{\textwidth}
@@ -309,7 +313,7 @@ Assume $\sigma^2 < \infty$. Then the random variable
 \begin{align*}
   Z = \frac{\bar X_n - \mu}{\sigma / \sqrt{n}}
 \end{align*}
-is approximately distributed as $\text{Normal}(0, 1)$.
+is approximately $\text{Normal}(0, 1)$ distributed.
 In other words
 \begin{align*}
 \P(Z\in[a, b])\approx \int_{a}^b
@@ -347,7 +351,7 @@ However, the normal approximation will not be appropriate
 if $1/p$ is on the same order of magnitude as $n$.
 See Figure~\ref{fig:pois_approx}.
 Do you see above why the normal approximation is not
-be appropriate here?
+appropriate here?
 
 
 \begin{figure}[!h]
@@ -386,7 +390,7 @@ with increasing $n$.
   I place a bucket outside in a rainstorm.
   The number of raindrops falling in my bucket
   is well-modeled with a Poisson distribution.
-  The total number of raindrops falling from the sky $n$
+  The total number of raindrops $n$ falling from the sky
   is large, but the probability $p$ of any raindrop falling in my bucket is small.
 \end{example}
 
@@ -406,7 +410,7 @@ Examples include:
 \begin{itemize}
   \item The number of car accidents at an
    intersection in a given week.
-  \item The number of earthquakes occuring in the Bay area in a given month.
+  \item The number of earthquakes occuring in the Bay Area in a given month.
   \item The number of customers arriving at a coffee shop between noon and 1pm.
 \end{itemize}
 
@@ -419,9 +423,10 @@ of arrivals at a coffee shop.
 Suppose from historical data, we observe that on average,
 $\lambda = 30$ customers arrive between noon and 1pm.
 
-To see why the Poisson distribution is apt,
+To see why the Poisson distribution may be a good model
+for th number of arrivals,
 divide the time between noon and 1pm into $(1/n)$-hour
-intervals. Assume
+intervals. Then, assume
 \begin{itemize}
   \item At most one arrival can occur during any
   $(1/n)$-hour interval.
@@ -435,7 +440,7 @@ in a one-hour period is distributed as
 $\text{Binomial}(n, \lambda / n)$ (do you see why?).
 
 Taking $n\rightarrow\infty$, the law of rare events
-shows that the number
+states that the number
 of arrivals is Poisson with mean $\lambda$.
 
 \textbf{So when are these assumptions appropriate?} The first is
@@ -457,7 +462,7 @@ domain knowledge or observed data.
 \subsection{Arrival times}
 
 \begin{exercise}[Arrival times]
-Often, we are also interested not only in the number of arrivals,
+Often, we are interested not only in the number of arrivals,
 but also when these arrivals occur.
 Show that if the number of arrivals in $t$-units of time
 follows a Poisson distribution with mean $\lambda t$,
@@ -469,13 +474,13 @@ has an exponential distribution with rate $\lambda$.
 
 In fact, if we further assume that the number of arrivals in
 disjoint time intervals are independent, then
-we arrive at a \textit{Poisson process},
+the arrival times follow a \textit{Poisson process},
 in which case the time between any two arrivals will be exponentially distributed.
 
 
 \fbox{\begin{minipage}{\textwidth}
 \textbf{Two descriptions of Poisson arrivals}.
-The following describe equivalent processes:
+The following describes equivalent processes:
 
 \begin{enumerate}[label = (\Roman*)]
   \item The \textit{number of arrivals} in an interval time of length $t$ is
