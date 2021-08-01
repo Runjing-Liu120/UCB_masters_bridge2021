@@ -130,6 +130,13 @@ This ``waiting" time interpretation is often used
 in engineering applications to model the time-to-failure of some
 component.
 
+Just so we have this on hand, recall the probability density function
+for the exponential distribution:
+\begin{align*}
+  f(x) = \lambda e^{-\lambda x}
+\end{align*}
+where $\lambda$ is the \textit{rate parameter}.
+
 We record a key property of the exponential distribution:
 \begin{exercise}[The memoryless property]
 Show that if the random variable $T$ is exponential, then
@@ -219,11 +226,8 @@ then $T$ is exponentially distributed.
 \begin{exercise}[The Weibull distribution]
 Let $\lambda(t) = \lambda \alpha t^{\alpha -1}$ for constants $\lambda > 0$
 and $\alpha > 0$.
-Show that
-\begin{enumerate}[label = (\alph*)]
-  \item $\P(T \geq t) = e^{-\lambda t^\alpha}$.
-  \item The density $f(t) = \lambda \alpha t^{\alpha -1}e^{-\lambda t^\alpha}$.
-\end{enumerate}
+Find the probability density function with this hazard.
+
 \end{exercise}
 
 \section{Continuous random variables: manipulating p.d.fs}
@@ -266,7 +270,7 @@ Then the range of $Y$ is an interval with endpoints $g(a)$ and $g(b)$.
 
 Then the density of $Y$ on this interval is
 \begin{align*}
-  f_Y(y) = f_X(x) / |g'(x)|.
+  f_Y(y) = \frac{f_X\big(g^{-1}(y)\big)}{g'\big(g^{-1}(y)\big)}.
 \end{align*}
 
 \end{minipage}}
