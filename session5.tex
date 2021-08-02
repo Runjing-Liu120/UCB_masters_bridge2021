@@ -128,7 +128,7 @@ cumulative distribution functions.
 
 \section{Max and min of random variables}
 
-\begin{exercise}[distribution and density functions
+\begin{exercise}[Distribution and density functions
   of min and max]
   Let $X_1, \ldots, X_n$ be independent random variables.
   Define $\xmax = \max(X_1, ..., X_n)$ and
@@ -149,23 +149,25 @@ cumulative distribution functions.
 
 \end{exercise}
 
-\begin{exercise}(min of independent exponential variables).
+\begin{exercise}(Min of independent exponential variables).
   Let $X_1, ..., X_n$ be exponentially distributed
   random variables. Let the rate parameter of $X_i$ be $\lambda_i$.
 
   Show that $\xmin = \min(X_1, ..., X_n)$ is also
-  exponentially distruted with rate parameter
+  exponentially distributed with rate parameter
   $\lambda = \lambda_1 + ... + \lambda_n$.
 \end{exercise}
 
-\begin{exercise}(min of independent uniform variables).
+\begin{exercise}(Min of independent uniform variables).
   Let $X_1, ..., X_n$ be uniformly distributed
   on (0, 1). Compute the density function of $\xmin$.
 \end{exercise}
 
 \section{Joint distributions}
 
-Given a pair of random variables, their \textit{joint distribution} is the probability distribution over the plane,
+Consider a pair of random variables $X$ and $Y$, each
+with range on the real line (or a subset of the real line).
+Their \textit{joint distribution} is the probability distribution over the plane,
 \begin{align*}
   \P(B) = \P((X, Y) \in B)
 \end{align*}
@@ -201,7 +203,7 @@ We record some other definitions:
 \end{itemize}
 
 
-\begin{exercise}[two independent uniform random variables]
+\begin{exercise}[Two independent uniform random variables]
 Let $X, Y$ be independent $\text{Uniform}(0, 1)$ random variables.
 \begin{enumerate}[label = (\alph*)]
   \item Find $\P(X^2 + Y^2 \leq 1)$.
@@ -222,7 +224,7 @@ $\{(x, y) : 0 < x < y < 1\}$.
 \end{exercise}
 
 
-\begin{exercise}[Independent exponential variables]
+\begin{exercise}[Exponential races]
 Let $X$ and $Y$ be independent and exponentially
 distributed random variables with parameters $\lambda$ and $\mu$, respectively. Calculate $\P(X<Y)$.
 \end{exercise}
@@ -252,6 +254,8 @@ the formula simplifies to
 
 \end{minipage}}
 
+IN CLASS: proof by picture.
+
 \begin{exercise}[Sum of exponential random variables]
 Let $X$ and $Y$ be independent exponentially distributed
 random variables with rate $\lambda$. Compute
@@ -270,16 +274,16 @@ $\mu + \lambda$ and variance $\sigma^2 + \tau^2$.
 \end{minipage}}
 
 \begin{exercise}[Distribution of heights]
-Suppose heights in a large populatoin are approximately
+Suppose heights in a large population are approximately
 normally distributed with a mean of 1.78m with a standard
-deviaion of 5cm. Suppose a group of 100 people are picked
+deviation of 5cm. Suppose a group of 100 people are picked
 at random from this population.
 \begin{enumerate}[label = (\alph*)]
   \item What is the probability that the tallest person in this group is over 1.93m?
   \item What is the probability that the average height
   of people in the group is over 1.8cm?
   \item Suppose the distribution of heights was not normal, but some other distribution with the given mean and SD. Would the probability to (a) or (b) change,
-  or whould they remain approximately the same?
+  or would they remain approximately the same?
 \end{enumerate}
 
 \end{exercise}
@@ -298,7 +302,7 @@ my arrival time is actually a normal distribution with mean
   \item What percentage of time do I arrive
   at the station before BART?
   \item If arrive at the stop at 8:09am, but BART still
-  hasn't come by 8:12AM, what is the probabiliy that I have already missed BART?
+  hasn't come by 8:12AM, what is the probability that I have already missed BART?
 \end{enumerate}
 
 \end{exercise}
