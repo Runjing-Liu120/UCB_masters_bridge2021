@@ -123,19 +123,22 @@
 \begin{document}
 \lecture{6}{Dependence between random variables}{Bryan Liu}{runjing\_liu@berkeley.edu}{6}
 
-\section{Conditional densitites}
+{\bf Supplemental reading: } Pitman, \textit{Probability}
+ Chapter 6.
+
+\section{Conditional densities}
 Recall that for a discrete random variable $X$,
-then the conditional distribution of $Y$ is given by
+the conditional distribution of $Y$ given $X = x$ is
 \begin{align*}
   \P(Y = y | X = x) = \frac{\P(Y = y, X = x)}{\P(X = x)}.
 \end{align*}
 However, if $X$ is a continuous random variable, then
 the denominator $X = x$ has probability 0,
-which results in an defined expression.
+which results in an undefined expression.
 
 In order to define conditional distributions for
 continuous random variables $X$ and $Y$,
-we can express the conditional distribution in terms of densities.
+we express the conditional distribution in terms of densities.
 
 \fbox{\begin{minipage}{\textwidth}
 \textbf{Conditional density of $Y$ given $X = x$}.
@@ -154,7 +157,7 @@ Then for any set $B$,
 
 \begin{exercise}[Uniform on a triangle]
 Let $X, Y$ uniformly distribution on the region
-$\{(x, y) : 0 < x < y < 2\}$. Find $\P(Y > 1 | X = x)$.
+$\{(x, y) : x \geq 0, y \geq 0, x + y \leq 2\}$. Find $\P(Y > 1 | X = x)$.
 \end{exercise}
 
 We can re-arrange Equation~\eqref{eq:cond_density}
@@ -164,11 +167,18 @@ to arrive at the multiplication rule for densities,
 \end{align*}
 
 \begin{exercise}[Gamma and uniform]
-Suppose $X$ has a $\text{Exponential}(\lambda)$ distribution,
+Suppose $X$ has a $\text{Gamma}(2, \lambda)$ distribution,
 and that given $X = x$, $Y$ is uniform on $(0, x)$.
+
+Here, the Gamma density is
+\begin{align*}
+  f_X(x) = \lambda^2xe^{-\lambda x}
+\end{align*}
+if $x > 0$ and 0 otherwise.
+
 \begin{enumerate}[label = (\alph*)]
   \item Find the joint density of $(X, Y)$.
-  \item Find marginal densitiy of $Y$.
+  \item Find marginal density of $Y$.
 \end{enumerate}
 \end{exercise}
 
@@ -226,15 +236,17 @@ Show that
 
   Now suppose the data come in pairs $(X, Y)$, and
   we get to observe $X$ in order to predict $Y$.
-  We want to construct a predictor,
-  which is a function $g(X)$, to predict $Y$.
+  We want to construct a predictor $g$,
+  which is a function that takes input $X$
+  and uses $g(X)$ to predict $Y$.
 
   If we again want to minimize the MSE,
-  \begin{align*}
+  \begin{align}
     \text{MSE}(g(X)) = \E((Y - g(X))^2),
-  \end{align*}
+    \label{eq:mse}
+  \end{align}
   argue that the optimal $g$ is $g(x) = \E(Y | X = x)$.
-
+\label{ex:predictions}
 \end{exercise}
 
 \section{Covariance and correlation}
@@ -277,9 +289,8 @@ is defined as
 \end{align}
 \end{minipage}}.
 
-\begin{exercise}
-  Show that $\corr(X,Y)$ is always between -1 and 1.
-\end{exercise}
+We can apply the Cauchy-Schwartz inequality to check
+that the correlation is always between -1 and 1.
 
 \begin{exercise}[Empirical correlations]
   Suppose we observe data pairs $(x_1, y_1), ...,
@@ -312,7 +323,7 @@ More generally, the correlation (or covariance) measures
 the \textit{linear} relationship between two random
 variables.
 Two variables may have some other, nonlinear
-relationship, and using the covariance
+relationship, and using the correlation
 as a metric to measure their dependence
 may not be appropriate.
 See Figure~\ref{fig:wiki_corr} for an illustration.
@@ -329,7 +340,38 @@ See Figure~\ref{fig:wiki_corr} for an illustration.
   \label{fig:wiki_corr}
 \end{figure}
 
-TODO exercise. best linear predictor. 
+\begin{exercise}[Best linear predictor]
+As in Exercise~\ref{ex:predictions},
+suppose data comes in pairs $(X, Y)$.
+In the previous exercise, we saw that
+the best predictor $g(X)$ was the conditional
+expectation $\E(Y | X)$.
 
+Here, we restrict ourselves to letting $g$
+be a linear function, that is, predictors of the form
+\begin{align*}
+  g(X) = \beta X + \gamma
+\end{align*}
+for $\beta, \gamma\in\mathbb{R}$.
+
+We again want to minimize the MSE \eqref{eq:mse}.
+
+\begin{enumerate}[label = (\alph*)]
+  \item Show that for fixed $\beta$,
+  the unique $\gamma$ which minimizes the MSE
+  if $\gamma^*(\beta) = \E(Y) - \beta \E(X)$.
+  \item Now plug in $\gamma = \gamma^*(\beta)$,
+  and show that the optimal $\beta$ is
+  $\beta^*=\cov(X, Y) / \var(X)$.
+  \item Apply the plug in principle by
+  computing the
+  variance/covariance under the empirical distribution,
+  and find
+  the sample formula for the best linear predictor.
+  (In contrast, the solutions in (a) and (b) are
+  \textit{population} formulas). 
+\end{enumerate}
+
+\end{exercise}
 
 \end{document}
